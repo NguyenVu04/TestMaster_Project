@@ -1,16 +1,16 @@
-# TestMaster
+# TestMaster 📝
 
 ## Project Title
 **Online Examination Application**
 
-## Vision
+## Vision 🌟
 TestMaster is designed to support teachers in conducting simple online assessments for their classes. Key features include:
 
-- Students can access tests using a passcode.
-- Test results are stored in the system per student and per test.
-- Teachers can view results for the entire class, create tests, and more.
+- 🧑‍🎓 Students can access tests using a passcode.
+- 📊 Test results are stored in the system per student and per test.
+- 🧑‍🏫 Teachers can view results for the entire class, create tests, and more.
 
-## Recommended Technical Stack
+## Recommended Technical Stack 🛠️
 To build TestMaster, we recommend using the following technologies:
 
 - **Java**: For the core backend logic.
@@ -19,17 +19,17 @@ To build TestMaster, we recommend using the following technologies:
 - **Next.js**: For the frontend application.
 - **Auth.js**: For handling authentication and authorization.
 
-## Getting Started
+## Getting Started 🚀
 To get started with TestMaster, follow the steps below:
 
-### Prerequisites
+### Prerequisites 📋
 Ensure you have the following installed on your machine:
 - Java Development Kit (JDK)
 - PostgreSQL
 - Node.js
 - npm (Node Package Manager)
 
-### Installation
+### Installation 🛠️
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/testmaster.git
@@ -63,7 +63,7 @@ Ensure you have the following installed on your machine:
      ```
    - Configure authentication settings in `auth.config.js` file.
 
-### Running the Application
+### Running the Application ▶️
 1. Start the backend server:
    ```bash
    cd backend
