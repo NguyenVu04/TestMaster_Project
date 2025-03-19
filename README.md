@@ -47,7 +47,7 @@ Ensure you have the following installed on your machine:
      ```
    - Configure the database connection in `application.properties` file:
      ```properties
-     spring.datasource.url=jdbc:postgresql://localhost:5432/public
+     spring.datasource.url=jdbc:postgresql://localhost:5432/testmaster
      spring.datasource.username=yourusername
      spring.datasource.password=yourpassword
      ```
