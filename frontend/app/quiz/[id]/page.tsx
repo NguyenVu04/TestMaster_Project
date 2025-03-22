@@ -12,7 +12,6 @@ interface QuizData {
   questionNumber: number;
   question: string;
   options: QuizOption[];
-  progress: number;
   total: number;
 }
 
@@ -44,19 +43,27 @@ export default function QuizPage({ params }: { params: { id: string } }) {
     setSelectedOption(optionId);
   };
 
-  // Progress bar width calculation
-  const progressPercentage = (quiz.progress / quiz.total) * 100;
+  // Calculate progress based on current question number.
+  // Assuming the first question is 155.
+  const firstQuestion = 155;
+  const lastQuestion = firstQuestion + quiz.total - 1;
+  const currentIndex = quiz.questionNumber - firstQuestion + 1;
+  const progressPercentage = (currentIndex / quiz.total) * 100;
 
-  // Navigation handlers: Assuming questionNumber represents the current question,
-  // navigate to previous or next question using questionNumber.
+  // Navigation handlers
   const handleBack = () => {
     const previousQuestion = quiz.questionNumber - 1;
     router.push(`/quiz/${previousQuestion}`);
   };
 
   const handleContinue = () => {
-    const nextQuestion = quiz.questionNumber + 1;
-    router.push(`/quiz/${nextQuestion}`);
+    if (quiz.questionNumber === lastQuestion) {
+      // Last question: for example, redirect to a summary or show "Done"
+      router.push('/quiz/done');
+    } else {
+      const nextQuestion = quiz.questionNumber + 1;
+      router.push(`/quiz/${nextQuestion}`);
+    }
   };
 
   return (
@@ -93,12 +100,12 @@ export default function QuizPage({ params }: { params: { id: string } }) {
                 onClick={() => handleOptionSelect(opt.id)}
                 className={`w-full flex items-center justify-start space-x-4 px-4 py-3 rounded-md border transition-colors ${
                   selectedOption === opt.id
-                    ? 'border-indigo-500'
-                    : 'border-gray-300'
+                    ? 'border-indigo-500 bg-gradient-to-r from-[#56CCF2] to-[#01FF88]'
+                    : 'border-gray-300 '
                 } bg-transparent`}
               >
                 {/* Transparent circle around option identifier */}
-                <span className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 text-gray-700">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 text-gray-700 bg-white">
                   {opt.id}
                 </span>
                 {/* Option Answer */}
@@ -109,14 +116,18 @@ export default function QuizPage({ params }: { params: { id: string } }) {
         </div>
 
         {/* Bottom Bar (Back, Progress, Continue) with gradient background */}
-        <div className="border-t border-gray-200 p-4 flex items-center justify-between rounded-b-md bg-gradient-to-r from-[#01FF88] to-[#56CCF2]">
-          {/* Back Button */}
-          <button
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-transparent border border-gray-300 rounded-md hover:bg-gray-100 transition"
-            onClick={handleBack}
-          >
-            BACK
-          </button>
+        <div className="border-t border-gray-200 p-4 flex items-center justify-between rounded-b-md bg-white">
+          {/* Show Back button only if not on first question */}
+          {quiz.questionNumber > firstQuestion ? (
+            <button
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gradient-to-r from-[#01FF88] to-[#56CCF2] transition"
+              onClick={handleBack}
+            >
+              BACK
+            </button>
+          ) : (
+            <div className="w-24" /> // Empty space placeholder for alignment
+          )}
 
           {/* Progress Area */}
           <div className="flex flex-row items-center">
@@ -132,16 +143,16 @@ export default function QuizPage({ params }: { params: { id: string } }) {
             </div>
             {/* Progress text */}
             <div className="text-sm text-gray-600 mb-1 px-2">
-              {quiz.progress}/{quiz.total}
+              {currentIndex}/{quiz.total}
             </div>
           </div>
 
-          {/* Continue Button */}
+          {/* Continue / Done Button */}
           <button
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-transparent border border-gray-300 rounded-md hover:bg-gray-100 transition"
+            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gradient-to-r from-[#01FF88] to-[#56CCF2] transition"
             onClick={handleContinue}
           >
-            CONTINUE
+            {quiz.questionNumber === lastQuestion ? 'DONE' : 'CONTINUE'}
           </button>
         </div>
       </div>
