@@ -7,7 +7,7 @@ export default function Home(): ReactElement {
   return (
     <div className="bg-white">
       {/* Phần Hero (Màn hình đầu tiên) */}
-      <section className={`mr-2 ${styles.heroSection}`}>
+      <section className="flex flex-row items-center justify-center">
         {/* Nội dung bên trái */}
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>Học những khái niệm mới mỗi phút</h1>
