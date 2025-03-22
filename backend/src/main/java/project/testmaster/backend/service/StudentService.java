@@ -23,7 +23,8 @@ public class StudentService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, AccountRepository accountRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public StudentService(StudentRepository studentRepository, AccountRepository accountRepository,
+            UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
@@ -37,16 +38,17 @@ public class StudentService {
         user.setLastName(request.getLastName());
         user.setPhoneNumber(request.getPhoneNumber());
         user = userRepository.save(user);
+
         // Create new account
         Account account = new Account();
+        account.setUserId(user.getId());
         account.setEmail(request.getEmail());
         account.setPassword(passwordEncoder.encode(request.getPassword()));
-        account.setUser(user);
         accountRepository.save(account);
 
         // Create new student
         Student student = new Student();
-        student.setUser(user);
+        student.setUserId(user.getId());
 
         return studentRepository.save(student);
     }

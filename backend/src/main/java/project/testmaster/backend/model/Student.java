@@ -17,7 +17,6 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 @Entity
 @Table(name = "student")
 public class Student {

@@ -13,7 +13,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "user_id", columnDefinition = "uuid DEFAULT gen_random_uuid()")
+    @Column(name = "user_id")
     private UUID userId;
 
 

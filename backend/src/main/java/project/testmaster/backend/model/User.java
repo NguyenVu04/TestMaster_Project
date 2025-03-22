@@ -18,7 +18,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "uuid DEFAULT gen_random_uuid()")
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "first_name")
