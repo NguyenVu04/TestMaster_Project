@@ -25,14 +25,8 @@ CREATE TABLE "admin" (
     "user_id" UUID PRIMARY KEY
 );
 
-CREATE TABLE "class" (
-    "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    "name" VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE "exam" (
-    "id" UUID UNIQUE NOT NULL DEFAULT gen_random_uuid(),
-    "class_id" UUID NOT NULL,
+    "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     "teacher_id" UUID,
     "title" VARCHAR(50) NOT NULL,
     "description" VARCHAR(255),
@@ -40,8 +34,7 @@ CREATE TABLE "exam" (
     "passcode" VARCHAR(15),
     "start_time" TIMESTAMP NOT NULL,
     "end_time" TIMESTAMP NOT NULL,
-    "time_limit" INT,
-    PRIMARY KEY ("id", "class_id")
+    "time_limit" INT
 );
 
 CREATE TYPE question_type AS ENUM ('MULTIPLE_CHOICE', 'SHORT_ANSWER');
@@ -63,18 +56,6 @@ CREATE TABLE "notification" (
     "content" TEXT NOT NULL,
     "created_at" TIMESTAMP NOT NULL,
     "seen" BOOLEAN NOT NULL
-);
-
-CREATE TABLE "class_student" (
-    "class_id" UUID NOT NULL,
-    "student_id" UUID NOT NULL,
-    PRIMARY KEY ("class_id", "student_id")
-);
-
-CREATE TABLE "class_teacher" (
-    "class_id" UUID NOT NULL,
-    "teacher_id" UUID NOT NULL,
-    PRIMARY KEY ("class_id", "teacher_id")
 );
 
 CREATE TABLE "exam_question" (
@@ -108,17 +89,10 @@ ALTER TABLE "student" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DE
 ALTER TABLE "teacher" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
 ALTER TABLE "admin" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
 ALTER TABLE "exam" 
-    ADD FOREIGN KEY ("class_id") REFERENCES "class" ("id") ON DELETE CASCADE,
     ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher" ("user_id") ON DELETE SET NULL;
 ALTER TABLE "notification" 
     ADD FOREIGN KEY ("sender_id") REFERENCES "user" ("id") ON DELETE CASCADE,
     ADD FOREIGN KEY ("receiver_id") REFERENCES "user" ("id") ON DELETE CASCADE;
-ALTER TABLE "class_student"
-    ADD FOREIGN KEY ("class_id") REFERENCES "class" ("id") ON DELETE CASCADE,
-    ADD FOREIGN KEY ("student_id") REFERENCES "student" ("user_id") ON DELETE CASCADE;
-ALTER TABLE "class_teacher"
-    ADD FOREIGN KEY ("class_id") REFERENCES "class" ("id") ON DELETE CASCADE,
-    ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher" ("user_id") ON DELETE CASCADE;
 ALTER TABLE "exam_question"
     ADD FOREIGN KEY ("exam_id") REFERENCES "exam" ("id") ON DELETE CASCADE,
     ADD FOREIGN KEY ("question_id") REFERENCES "question" ("id") ON DELETE CASCADE;
