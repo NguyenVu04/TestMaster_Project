@@ -1,9 +1,5 @@
 package project.testmaster.backend.service;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,19 +13,14 @@ import project.testmaster.backend.repository.UserRepository;
 
 @Service
 public class StudentService {
-    private final StudentRepository studentRepository;
-    private final AccountRepository accountRepository;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-
     @Autowired
-    public StudentService(StudentRepository studentRepository, AccountRepository accountRepository,
-            UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.studentRepository = studentRepository;
-        this.accountRepository = accountRepository;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private StudentRepository studentRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Student registerStudent(StudentSignupRequest request) {
 
@@ -40,15 +31,15 @@ public class StudentService {
         user = userRepository.save(user);
 
         // Create new account
-        Account account = new Account();
-        account.setUserId(user.getId());
-        account.setEmail(request.getEmail());
-        account.setPassword(passwordEncoder.encode(request.getPassword()));
+        Account account = new Account(
+            user, 
+            request.getEmail(), 
+            passwordEncoder
+                .encode(request.getPassword()));
         accountRepository.save(account);
 
         // Create new student
-        Student student = new Student();
-        student.setUserId(user.getId());
+        Student student = new Student(user);
 
         return studentRepository.save(student);
     }
