@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useRef } from "react";
 import QuizzCode from "@/app/components/QuizzCode";
-import HistoryCard from "@/app/components/HistoryCard";
+import HistoryCard from "@/app/components/StudentHistoryCard";
 
 const TeacherScreen = () => {
   const [quizzCode, setQuizzCode] = React.useState("");
@@ -30,11 +30,11 @@ const TeacherScreen = () => {
           console.log(code);
         }}
       />
-      <div className="flex flex-row gap-4 self-center mt-20">
+      {/* <div className="flex flex-row gap-4 self-center mt-20">
         <HistoryCard />
         <HistoryCard />
         <HistoryCard />
-      </div>
+      </div> */}
     </div>
   );
 };
