@@ -5,44 +5,39 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 @Entity
 @Table(name = "student")
 public class Student {
-
     @Id
     @Column(name = "user_id")
     private UUID userId;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public UUID getUserId() {
-        return userId;
+    public Student(User user) {
+        this.user = user;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public UUID getUserId() {
+        return user.getId();
     }
 
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

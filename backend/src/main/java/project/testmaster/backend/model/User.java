@@ -1,24 +1,21 @@
 package project.testmaster.backend.model;
 
+import java.util.UUID;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 @Entity
 @Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "uuid DEFAULT gen_random_uuid()")
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "first_name")
@@ -32,10 +29,6 @@ public class User {
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getFirstName() {

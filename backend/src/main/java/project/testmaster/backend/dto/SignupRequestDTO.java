@@ -1,6 +1,6 @@
 package project.testmaster.backend.dto;
 
-public class StudentSignupRequest {
+public class SignupRequestDTO {
     private String email;
     private String password;
     private String firstName;
