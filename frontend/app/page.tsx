@@ -1,14 +1,13 @@
-'use client';
-import React, { ReactElement } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import styles from './page.module.css';
+import React, { ReactElement } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import styles from "./page.module.css";
 
 export default function Home(): ReactElement {
   return (
-    <div className='bg-white'>
+    <div className="bg-white">
       {/* Phần Hero (Màn hình đầu tiên) */}
-      <section className={styles.heroSection}>
+      <section className="flex flex-row items-center justify-center">
         {/* Nội dung bên trái */}
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>Học những khái niệm mới mỗi phút</h1>
@@ -16,7 +15,12 @@ export default function Home(): ReactElement {
             Chúng tôi giúp bạn chuẩn bị cho các kỳ thi và bài kiểm tra
           </p>
           <div className="flex space-x-4">
-            <button className={styles.heroButtonPrimary}>Bắt đầu làm bài</button>
+            {/* <button className={styles.heroButtonPrimary}>
+              Bắt đầu làm bài
+            </button> */}
+            <Link href="/auth/login" className={styles.heroButtonPrimary}>
+              Bắt đầu làm bài
+            </Link>
             <Link href="#know-more" className={styles.heroButtonSecondary}>
               Tìm hiểu thêm
             </Link>
@@ -27,8 +31,8 @@ export default function Home(): ReactElement {
           <Image
             src="/assets/Illusttration.png"
             alt="Hình minh họa"
-            width={400}
-            height={400}
+            width={600}
+            height={600}
             priority
           />
         </div>
@@ -37,28 +41,33 @@ export default function Home(): ReactElement {
       {/* Màn hình thứ hai (Tính năng) */}
       <section id="features" className={styles.featuresSection}>
         <h2 className={styles.featuresTitle}>
-          Online Exam System có những <span className={styles.featuresHighlight}>tính năng tuyệt vời</span> như:
+          Online Exam System có những{" "}
+          <span className={styles.featuresHighlight}>tính năng tuyệt vời</span>{" "}
+          như:
         </h2>
         <div className={styles.featuresContainer}>
           {/* Tính năng 1 */}
           <div className={styles.featureItem}>
             <h3 className={styles.featureItemTitle}>Phủ sóng 3D</h3>
             <p className={styles.featureItemText}>
-              Bao phủ 3 chiều cho tất cả các câu hỏi liên quan đến một chủ đề cụ thể.
+              Bao phủ 3 chiều cho tất cả các câu hỏi liên quan đến một chủ đề cụ
+              thể.
             </p>
           </div>
           {/* Tính năng 2 */}
           <div className={styles.featureItem}>
             <h3 className={styles.featureItemTitle}>Nhiều môn học</h3>
             <p className={styles.featureItemText}>
-              Nhiều môn học để lựa chọn, ví dụ: Ngôn ngữ lập trình, các môn kỹ thuật, v.v.
+              Nhiều môn học để lựa chọn, ví dụ: Ngôn ngữ lập trình, các môn kỹ
+              thuật, v.v.
             </p>
           </div>
           {/* Tính năng 3 */}
           <div className={styles.featureItem}>
             <h3 className={styles.featureItemTitle}>Giải pháp chi tiết</h3>
             <p className={styles.featureItemText}>
-              Giải thích chi tiết về một giải pháp được cung cấp để hiểu sâu hơn về một chủ đề.
+              Giải thích chi tiết về một giải pháp được cung cấp để hiểu sâu hơn
+              về một chủ đề.
             </p>
           </div>
         </div>
@@ -69,10 +78,15 @@ export default function Home(): ReactElement {
         <h2 className={styles.aboutUsTitle}>Về chúng tôi</h2>
         <div className={styles.aboutUsText}>
           <p>
-            Online Exam System là nền tảng được xây dựng bởi các nhà giáo dục và sinh viên tin vào sức mạnh của việc học theo từng phần nhỏ. Sứ mệnh của chúng tôi là làm cho việc học trở nên thú vị, dễ tiếp cận và liên tục—mỗi phút trong ngày.
+            Online Exam System là nền tảng được xây dựng bởi các nhà giáo dục và
+            sinh viên tin vào sức mạnh của việc học theo từng phần nhỏ. Sứ mệnh
+            của chúng tôi là làm cho việc học trở nên thú vị, dễ tiếp cận và
+            liên tục—mỗi phút trong ngày.
           </p>
           <p>
-            Chúng tôi không ngừng cập nhật các bài kiểm tra và tài liệu học tập để đảm bảo chúng luôn phù hợp và hiệu quả. Hãy tham gia cùng chúng tôi và trải nghiệm một cách học tập mới!
+            Chúng tôi không ngừng cập nhật các bài kiểm tra và tài liệu học tập
+            để đảm bảo chúng luôn phù hợp và hiệu quả. Hãy tham gia cùng chúng
+            tôi và trải nghiệm một cách học tập mới!
           </p>
         </div>
       </section>
@@ -80,8 +94,11 @@ export default function Home(): ReactElement {
       {/* Màn hình thứ tư (Hành trình học tập) */}
       <section id="learning-journey" className={styles.learningJourneySection}>
         <h2 className={styles.learningJourneyTitle}>
-          Hãy khám phá{' '}
-          <span className={styles.learningJourneyHighlight}>hành trình học tập</span> của bạn
+          Hãy khám phá{" "}
+          <span className={styles.learningJourneyHighlight}>
+            hành trình học tập
+          </span>{" "}
+          của bạn
         </h2>
         <div className={styles.learningJourneyGrid}>
           {/* Bước 1 */}
@@ -95,9 +112,12 @@ export default function Home(): ReactElement {
               />
             </div>
             <div>
-              <h3 className={styles.learningJourneyStepTitle}>1. Chọn môn học của bạn</h3>
+              <h3 className={styles.learningJourneyStepTitle}>
+                1. Chọn môn học của bạn
+              </h3>
               <p className={styles.learningJourneyStepText}>
-                Chọn môn học yêu thích từ danh sách đa dạng các môn học và tiếp tục hành trình của bạn.
+                Chọn môn học yêu thích từ danh sách đa dạng các môn học và tiếp
+                tục hành trình của bạn.
               </p>
             </div>
           </div>
@@ -112,7 +132,9 @@ export default function Home(): ReactElement {
               />
             </div>
             <div>
-              <h3 className={styles.learningJourneyStepTitle}>2. Chọn độ khó</h3>
+              <h3 className={styles.learningJourneyStepTitle}>
+                2. Chọn độ khó
+              </h3>
               <p className={styles.learningJourneyStepText}>
                 Chọn độ khó bạn mong muốn và nhận các câu hỏi phù hợp.
               </p>
@@ -129,9 +151,12 @@ export default function Home(): ReactElement {
               />
             </div>
             <div>
-              <h3 className={styles.learningJourneyStepTitle}>3. Độ khó tăng dần</h3>
+              <h3 className={styles.learningJourneyStepTitle}>
+                3. Độ khó tăng dần
+              </h3>
               <p className={styles.learningJourneyStepText}>
-                Độ khó của các câu hỏi tiếp theo sẽ tăng dần bất kể câu trả lời trước của bạn.
+                Độ khó của các câu hỏi tiếp theo sẽ tăng dần bất kể câu trả lời
+                trước của bạn.
               </p>
             </div>
           </div>
@@ -146,9 +171,12 @@ export default function Home(): ReactElement {
               />
             </div>
             <div>
-              <h3 className={styles.learningJourneyStepTitle}>4. Tổng quan chi tiết điểm số</h3>
+              <h3 className={styles.learningJourneyStepTitle}>
+                4. Tổng quan chi tiết điểm số
+              </h3>
               <p className={styles.learningJourneyStepText}>
-                Nhận tổng quan chi tiết về phiên làm bài của bạn và các mẹo để cải thiện lần sau.
+                Nhận tổng quan chi tiết về phiên làm bài của bạn và các mẹo để
+                cải thiện lần sau.
               </p>
             </div>
           </div>
