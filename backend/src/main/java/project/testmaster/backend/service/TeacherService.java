@@ -7,15 +7,17 @@ import org.springframework.stereotype.Service;
 import project.testmaster.backend.dto.SignupRequestDTO;
 import project.testmaster.backend.model.Account;
 import project.testmaster.backend.model.Student;
+import project.testmaster.backend.model.Teacher;
 import project.testmaster.backend.model.User;
 import project.testmaster.backend.repository.AccountRepository;
 import project.testmaster.backend.repository.StudentRepository;
+import project.testmaster.backend.repository.TeacherRepository;
 import project.testmaster.backend.repository.UserRepository;
 
 @Service
-public class StudentService {
+public class TeacherService {
     @Autowired
-    private StudentRepository studentRepository;
+    private TeacherRepository teacherRepository;
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -23,7 +25,7 @@ public class StudentService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Student registerStudent(SignupRequestDTO request) {
+    public Teacher registerTeacher(SignupRequestDTO request) {
 
         User user = new User();
         user.setFirstName(request.getFirstName());
@@ -40,8 +42,8 @@ public class StudentService {
         accountRepository.save(account);
 
         // Create new student
-        Student student = new Student(user);
+        Teacher teacher = new Teacher(user);
 
-        return studentRepository.save(student);
+        return teacherRepository.save(teacher);
     }
 }
