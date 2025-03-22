@@ -1,113 +1,172 @@
-import Image from "next/image";
+'use client';
+import React, { ReactElement } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './page.module.css';
 
-export default function Home() {
+export default function Home(): ReactElement {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div>
+      {/* Phần Hero (Màn hình đầu tiên) */}
+      <section className={styles.heroSection}>
+        {/* Nội dung bên trái */}
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>Học những khái niệm mới mỗi phút</h1>
+          <p className={styles.heroParagraph}>
+            Chúng tôi giúp bạn chuẩn bị cho các kỳ thi và bài kiểm tra
+          </p>
+          <div className="flex space-x-4">
+            <button className={styles.heroButtonPrimary}>Bắt đầu làm bài</button>
+            <Link href="#know-more" className={styles.heroButtonSecondary}>
+              Tìm hiểu thêm
+            </Link>
+          </div>
         </div>
-      </div>
+        {/* Hình minh họa */}
+        <div className={styles.heroImageWrapper}>
+          <Image
+            src="/assets/Illusttration.png"
+            alt="Hình minh họa"
+            width={400}
+            height={400}
+            priority
+          />
+        </div>
+      </section>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
+      {/* Màn hình thứ hai (Cách hoạt động) */}
+      <section id="how-it-works" className={styles.howItWorksSection}>
+        <h2 className={styles.howItWorksTitle}>Cách hoạt động</h2>
+        <div className={styles.howItWorksText}>
+          <p>
+            Chúng tôi có một loạt các chủ đề và bài kiểm tra giúp bạn học tập. Mỗi phút, bạn có thể học được điều gì đó mới, luyện tập với các bài kiểm tra nhanh và đánh giá sự tiến bộ của mình ngay lập tức.
           </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
+          <p>
+            Đăng ký hoặc đăng nhập để theo dõi tiến trình, thách thức bạn bè và chia sẻ điểm số của bạn.
           </p>
-        </a>
+        </div>
+      </section>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+      {/* Màn hình thứ ba (Tính năng) */}
+      <section id="features" className={styles.featuresSection}>
+        <h2 className={styles.featuresTitle}>
+          Online Exam System có những <span className={styles.featuresHighlight}>tính năng tuyệt vời</span> như:
+        </h2>
+        <div className={styles.featuresContainer}>
+          {/* Tính năng 1 */}
+          <div className={styles.featureItem}>
+            <h3 className={styles.featureItemTitle}>Phủ sóng 3D</h3>
+            <p className={styles.featureItemText}>
+              Bao phủ 3 chiều cho tất cả các câu hỏi liên quan đến một chủ đề cụ thể.
+            </p>
+          </div>
+          {/* Tính năng 2 */}
+          <div className={styles.featureItem}>
+            <h3 className={styles.featureItemTitle}>Nhiều môn học</h3>
+            <p className={styles.featureItemText}>
+              Nhiều môn học để lựa chọn, ví dụ: Ngôn ngữ lập trình, các môn kỹ thuật, v.v.
+            </p>
+          </div>
+          {/* Tính năng 3 */}
+          <div className={styles.featureItem}>
+            <h3 className={styles.featureItemTitle}>Giải pháp chi tiết</h3>
+            <p className={styles.featureItemText}>
+              Giải thích chi tiết về một giải pháp được cung cấp để hiểu sâu hơn về một chủ đề.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
+      {/* Màn hình thứ tư (Về chúng tôi) */}
+      <section id="about-us" className={styles.aboutUsSection}>
+        <h2 className={styles.aboutUsTitle}>Về chúng tôi</h2>
+        <div className={styles.aboutUsText}>
+          <p>
+            Online Exam System là nền tảng được xây dựng bởi các nhà giáo dục và sinh viên tin vào sức mạnh của việc học theo từng phần nhỏ. Sứ mệnh của chúng tôi là làm cho việc học trở nên thú vị, dễ tiếp cận và liên tục—mỗi phút trong ngày.
           </p>
-        </a>
-      </div>
-    </main>
+          <p>
+            Chúng tôi không ngừng cập nhật các bài kiểm tra và tài liệu học tập để đảm bảo chúng luôn phù hợp và hiệu quả. Hãy tham gia cùng chúng tôi và trải nghiệm một cách học tập mới!
+          </p>
+        </div>
+      </section>
+
+      {/* Màn hình thứ năm (Hành trình học tập) */}
+      <section id="learning-journey" className={styles.learningJourneySection}>
+        <h2 className={styles.learningJourneyTitle}>
+          Hãy khám phá{' '}
+          <span className={styles.learningJourneyHighlight}>hành trình học tập</span> của bạn
+        </h2>
+        <div className={styles.learningJourneyGrid}>
+          {/* Bước 1 */}
+          <div className={styles.learningJourneyStep}>
+            <div className={styles.learningJourneyIconWrapper}>
+              <Image
+                src="/assets/Group 26.png"
+                alt="Biểu tượng 1"
+                width={40}
+                height={40}
+              />
+            </div>
+            <div>
+              <h3 className={styles.learningJourneyStepTitle}>1. Chọn môn học của bạn</h3>
+              <p className={styles.learningJourneyStepText}>
+                Chọn môn học yêu thích từ danh sách đa dạng các môn học và tiếp tục hành trình của bạn.
+              </p>
+            </div>
+          </div>
+          {/* Bước 2 */}
+          <div className={styles.learningJourneyStep}>
+            <div className={styles.learningJourneyIconWrapper}>
+              <Image
+                src="/assets/Group 27.png"
+                alt="Biểu tượng 2"
+                width={40}
+                height={40}
+              />
+            </div>
+            <div>
+              <h3 className={styles.learningJourneyStepTitle}>2. Chọn độ khó</h3>
+              <p className={styles.learningJourneyStepText}>
+                Chọn độ khó bạn mong muốn và nhận các câu hỏi phù hợp.
+              </p>
+            </div>
+          </div>
+          {/* Bước 3 */}
+          <div className={styles.learningJourneyStep}>
+            <div className={styles.learningJourneyIconWrapper}>
+              <Image
+                src="/assets/Group 28.png"
+                alt="Biểu tượng 3"
+                width={40}
+                height={40}
+              />
+            </div>
+            <div>
+              <h3 className={styles.learningJourneyStepTitle}>3. Độ khó tăng dần</h3>
+              <p className={styles.learningJourneyStepText}>
+                Độ khó của các câu hỏi tiếp theo sẽ tăng dần bất kể câu trả lời trước của bạn.
+              </p>
+            </div>
+          </div>
+          {/* Bước 4 */}
+          <div className={styles.learningJourneyStep}>
+            <div className={styles.learningJourneyIconWrapper}>
+              <Image
+                src="/assets/Group 29.png"
+                alt="Biểu tượng 4"
+                width={40}
+                height={40}
+              />
+            </div>
+            <div>
+              <h3 className={styles.learningJourneyStepTitle}>4. Tổng quan chi tiết điểm số</h3>
+              <p className={styles.learningJourneyStepText}>
+                Nhận tổng quan chi tiết về phiên làm bài của bạn và các mẹo để cải thiện lần sau.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
