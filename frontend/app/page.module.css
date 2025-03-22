@@ -1,0 +1,161 @@
+/* app/page.module.css */
+
+/* Navigation */
+.header {
+    @apply flex items-center justify-between py-4 px-8 shadow-sm;
+  }
+  
+  .logo {
+    @apply text-2xl font-bold text-blue-600;
+  }
+  
+  .nav {
+    @apply hidden md:flex space-x-6;
+  }
+  
+  .navLink {
+    @apply text-gray-600 hover:text-gray-800 transition;
+  }
+  
+  .loginBtn {
+    @apply px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition;
+  }
+  
+  /* Hero Section */
+  .heroSection {
+    @apply flex flex-col-reverse md:flex-row items-center justify-between px-8 py-16 bg-gray-50 min-h-screen;
+  }
+  
+  .heroContent {
+    @apply max-w-xl space-y-6;
+  }
+  
+  .heroTitle {
+    @apply text-4xl md:text-5xl font-bold text-gray-900;
+  }
+  
+  .heroParagraph {
+    @apply text-gray-700 text-lg;
+  }
+  
+  .heroButtonPrimary {
+    @apply px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition;
+  }
+  
+  .heroButtonSecondary {
+    @apply px-6 py-3 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded-md hover:bg-blue-50 transition;
+  }
+  
+  .heroImageWrapper {
+    @apply w-full md:w-1/2 flex justify-center mb-8 md:mb-0;
+  }
+  
+  /* How It Works Section */
+  .howItWorksSection {
+    @apply min-h-screen flex flex-col items-center justify-center py-16 px-8;
+  }
+  
+  .howItWorksTitle {
+    @apply text-3xl md:text-4xl font-bold mb-8 text-gray-900;
+  }
+  
+  .howItWorksText {
+    @apply max-w-4xl text-center text-gray-700 space-y-4;
+  }
+  
+  /* Features Section */
+  .featuresSection {
+    @apply min-h-screen bg-white flex flex-col items-center justify-center py-16 px-8;
+  }
+  
+  .featuresTitle {
+    @apply text-3xl md:text-4xl font-bold mb-4 text-gray-900;
+  }
+  
+  .featuresHighlight {
+    @apply text-green-500;
+  }
+  
+  .featuresContainer {
+    @apply flex flex-col md:flex-row items-start md:items-center justify-center space-y-6 md:space-y-0 md:space-x-8 max-w-5xl w-full px-4;
+  }
+  
+  .featureItem {
+    @apply text-center flex-1 p-4 md:p-6 rounded-md;
+  }
+  
+  .featureItemTitle {
+    @apply text-xl font-semibold mb-2 text-gray-800;
+  }
+  
+  .featureItemText {
+    @apply text-gray-600;
+  }
+  
+  /* About Us Section */
+  .aboutUsSection {
+    @apply min-h-screen flex flex-col items-center justify-center py-16 px-8 bg-gray-50;
+  }
+  
+  .aboutUsTitle {
+    @apply text-3xl md:text-4xl font-bold mb-8 text-gray-900;
+  }
+  
+  .aboutUsText {
+    @apply max-w-4xl text-center text-gray-700 space-y-4;
+  }
+  
+  /* Learning Journey Section */
+  .learningJourneySection {
+    @apply min-h-screen flex flex-col items-center justify-center py-16 px-8 bg-white;
+  }
+  
+  .learningJourneyTitle {
+    @apply text-3xl md:text-4xl font-bold mb-6 text-gray-900;
+  }
+  
+  .learningJourneyHighlight {
+    @apply text-green-500;
+  }
+  
+  .learningJourneyGrid {
+    @apply max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700;
+  }
+  
+  .learningJourneyStep {
+    @apply flex items-start space-x-4;
+  }
+  
+  .learningJourneyIconWrapper {
+    @apply w-10 h-10 flex-shrink-0;
+  }
+  
+  .learningJourneyStepTitle {
+    @apply text-lg font-semibold text-gray-800;
+  }
+  
+  .learningJourneyStepText {
+    @apply text-gray-600;
+  }
+  
+  /* Footer */
+  .footer {
+    @apply py-6 px-8 bg-gray-900 text-white;
+  }
+  
+  .footerContainer {
+    @apply max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center;
+  }
+  
+  .footerText {
+    @apply text-sm;
+  }
+  
+  .footerNav {
+    @apply flex space-x-4 mt-4 md:mt-0;
+  }
+  
+  .footerNavLink {
+    @apply text-sm hover:underline;
+  }
+  
