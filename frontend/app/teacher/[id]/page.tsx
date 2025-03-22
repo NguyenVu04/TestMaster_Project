@@ -1,14 +1,14 @@
 "use client";
-import HistoryCard from "@/app/components/HistoryCard";
-import QuizzCode from "@/app/components/QuizzCode";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
+import QuizzCode from "@/app/components/QuizzCode";
+import HistoryCard from "@/app/components/HistoryCard";
 
-function StudentHome() {
+const TeacherScreen = () => {
   const [quizzCode, setQuizzCode] = React.useState("");
   console.log(quizzCode);
   return (
-    <div className="flex flex-1 border-2 flex-col items-center relative ">
+    <div className="flex flex-1 border-2 flex-col items-center  relative ">
       <Image
         src="/outline5.png"
         alt="logo"
@@ -37,6 +37,6 @@ function StudentHome() {
       </div>
     </div>
   );
-}
+};
 
-export default StudentHome;
+export default TeacherScreen;
