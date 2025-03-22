@@ -18,7 +18,7 @@ export default function Home(): ReactElement {
             {/* <button className={styles.heroButtonPrimary}>
               Bắt đầu làm bài
             </button> */}
-            <Link href="/student/1" className={styles.heroButtonPrimary}>
+            <Link href="/auth/login" className={styles.heroButtonPrimary}>
               Bắt đầu làm bài
             </Link>
             <Link href="#know-more" className={styles.heroButtonSecondary}>
