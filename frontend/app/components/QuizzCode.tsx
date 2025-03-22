@@ -7,7 +7,7 @@ type QuizzCodeProps = {
 const QuizzCode = ({ onClick }: QuizzCodeProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   return (
-    <div className="flex flex-row items-center gap-0">
+    <div className="flex flex-row items-center gap-0 mt-20">
       <input
         ref={inputRef}
         type="text"
