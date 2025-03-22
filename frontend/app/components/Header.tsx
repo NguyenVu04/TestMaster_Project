@@ -10,7 +10,15 @@ function Header() {
     >
       <nav className="container mx-auto flex justify-between items-center py-4 ">
         <div className="flex-1">
-          <Image src={Logo} alt="Logo" width={100} height={100} />
+          <Link href="/">
+            <Image
+              src={Logo}
+              alt="Logo"
+              width={100}
+              height={100}
+              className="transition-transform duration-300 ease-in-out hover:scale-120"
+            />
+          </Link>
         </div>
         <ul className="flex justify-between items-center flex-1 gap-8 text-[#E0E0E0]">
           <li className="flex items-center">
