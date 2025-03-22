@@ -5,7 +5,7 @@ import { Question } from '@/lib/definitions';
 import Questioncard from '@/app/components/QuestionCard';
 
 function page() {
-  const [form_status, setForm_status] = useState('question')
+  const [form_status, setForm_status] = useState('infor')
   const [isShownOverlay, setIsShownOverlay] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [newQuestion, setNewQuestion] = useState({
@@ -36,10 +36,10 @@ function page() {
   ] as Question[])
 
   return (
-    <div className='bg-[#2faffe] flex justify-center items-center text-white min-h-lvh'>
+    <div className='bg-[#2faffe] flex justify-center items-center text-white h-lvh'>
         <form 
             action=""
-            className='flex flex-col gap-8 p-4 bg-white rounded container text-black shadow-xl max-h-[700px]'
+            className='flex flex-col gap-8 p-4 bg-white rounded container text-black shadow-xl max-h-[700px] overflow-y-scroll'
         >
             {form_status === 'infor' && (
                 <>
@@ -98,6 +98,15 @@ function page() {
                             <Questioncard key={index} question={question}/>
                         ))
                     }
+                    <button 
+                        className='p-2 rounded bg-[#31F7C4]'
+                        onClick={e => {
+                            e.preventDefault()
+                            setForm_status('infor')
+                        }}
+                    >
+                        Submit
+                    </button>
                 </>
             )}
 
