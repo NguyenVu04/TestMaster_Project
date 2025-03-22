@@ -37,12 +37,7 @@ function Header() {
             </a>
           </li>
           <li className="flex items-center">
-            <Link
-              className="hover:bg-[#31F7C4] hover:text-white  inline-block w-full py-4 px-6 rounded-lg border border-[#31F7C4] text-[#31F7C4]"
-              href="/auth/login"
-            >
-              Login
-            </Link>
+            <Link className="inline-block w-full py-4 px-6 border border-[#31F7C4] text-[#31F7C4]" href="/auth/login">Login</Link>
           </li>
         </ul>
       </nav>
