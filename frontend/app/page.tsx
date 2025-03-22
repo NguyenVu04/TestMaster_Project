@@ -33,7 +33,9 @@ export default function Home(): ReactElement {
             alt="Hình minh họa"
             width={600}
             height={600}
+            style={{ width: 600, height: "auto" }}
             priority
+            className="w-full h-auto"
           />
         </div>
       </section>
