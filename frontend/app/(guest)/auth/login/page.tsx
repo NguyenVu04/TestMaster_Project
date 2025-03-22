@@ -1,22 +1,18 @@
-
-'use client'
+"use client";
 import React, { Suspense, useState } from "react";
-import Image from 'next/image'
+import Image from "next/image";
 import Link from "next/link";
 
-import signinIm from '@/public/Illusttration.png';
+import signinIm from "@/public/Illusttration.png";
 import { validateLoginData } from "@/lib/validation/auth";
-
-
 
 export default function SignIn() {
   const types = ["email", "password", "role"];
   const [infor, setInfor] = useState({
     email: "",
     password: "",
-    role: "student"
+    role: "student",
   });
-
 
   const [errors, setErrors] = useState<any[]>([]);
 
@@ -31,25 +27,24 @@ export default function SignIn() {
     setErrors(er);
   }
 
-
   async function handleSignIn() {
-    const {success, errors} = validateLoginData(infor)
-    console.log(errors)
-    if(!success) {
+    const { success, errors } = validateLoginData(infor);
+    console.log(errors);
+    if (!success) {
       setErrors(errors);
       return;
     }
     console.log("Login success", infor);
     reset();
-
+  }
 
   const reset = () => {
     setInfor({
       email: "",
       password: "",
-      role: "student"
-    })
-  }
+      role: "student",
+    });
+  };
 
   function handleKeyDown(event: any) {
     if (event.key === "Enter") {
@@ -60,50 +55,18 @@ export default function SignIn() {
   return (
     <div className="bg-white">
       <section className="flex gap-4">
-
-      <div className="basis-3/5 max-h-fit hidden lg:block">
-        <Image
-          alt = "Sign in"
-          src={signinIm}
-          className="h-full w-full object-cover rounded-3xl"
-        />
-      </div>
-      <div className="w-full lg:w-7/12 mt-24">
-        <div className="text-center">
-          <div className="font-bold text-6xl mb-4 text-black">
-            <small className="text-base">woof ~</small> Login{" "}
-            <small className="text-base">~ woof</small>
-          </div>
+        <div className="basis-3/5 max-h-fit hidden lg:block">
+          <Image
+            alt="Sign in"
+            src={signinIm}
+            className="h-full w-full object-cover rounded-3xl"
+          />
         </div>
-        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2 text-black">
-          <div className="mb-1 flex flex-col gap-6">
-            <div
-              
-              color="blue-gray"
-              className="-mb-3 font-medium"
-            >
-              Email
-            </div>
-            <input
-              id="0"
-              value={infor.email}
-              placeholder="tung@gmail.com"
-              className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-md shadow-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-              onChange={(e) => handleChange(e)}
-              onKeyDown={(e) => handleKeyDown(e)}
-            />
-            {errors.some((err) => err.field === "email") && (
-                <p className="text-red-500 text-sm">
-                  {errors.find((err) => err.field === "email")?.message}
-                </p>
-              )}
-            <div
-
-              color="blue-gray"
-              className="-mb-3 font-medium"
-            >
-              Password
-
+        <div className="w-full lg:w-7/12 mt-24">
+          <div className="text-center">
+            <div className="font-bold text-6xl mb-4 text-black">
+              <small className="text-base">woof ~</small> Login{" "}
+              <small className="text-base">~ woof</small>
             </div>
           </div>
           <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2 text-black">
@@ -112,16 +75,18 @@ export default function SignIn() {
                 Email
               </div>
               <input
-
-                id="1"
-                value={infor.password}
-                placeholder="********"
+                id="0"
+                value={infor.email}
+                placeholder="tung@gmail.com"
                 className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-md shadow-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-                autoComplete="password"
-
                 onChange={(e) => handleChange(e)}
                 onKeyDown={(e) => handleKeyDown(e)}
               />
+              {errors.some((err) => err.field === "email") && (
+                <p className="text-red-500 text-sm">
+                  {errors.find((err) => err.field === "email")?.message}
+                </p>
+              )}
               <div color="blue-gray" className="-mb-3 font-medium">
                 Password
               </div>
@@ -130,66 +95,62 @@ export default function SignIn() {
                   id="1"
                   value={infor.password}
                   placeholder="********"
-                  className="p-2 !border-t-blue-gray-200 focus:!border-t-gray-900"
+                  className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-md shadow-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                   autoComplete="password"
                   onChange={(e) => handleChange(e)}
                   onKeyDown={(e) => handleKeyDown(e)}
                 />
               </div>
-            </div>
-
-            {errors.some((err) => err.field === "password") && (
+              {errors.some((err) => err.field === "password") && (
                 <p className="text-red-500 text-sm">
                   {errors.find((err) => err.field === "password")?.message}
                 </p>
               )}
-            <div
-            color="blue-gray"
-            className="-mb-3 font-medium"
-            >
-            Role
-            </div>
-            <div className="flex relative">
-            <select
-                id="2"
-                value={infor.role}
-                className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-md shadow-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-                onChange={(e) => handleChange(e)}
-                onKeyDown={(e) => handleKeyDown(e)}
-            >
-                <option value="" disabled>Select your role</option>
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-            </select>
-            </div>
-            {errors.some((err) => err.field === "role") && (
+              <div color="blue-gray" className="-mb-3 font-medium">
+                Role
+              </div>
+              <div className="flex relative">
+                <select
+                  id="2"
+                  value={infor.role}
+                  className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-md shadow-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  onChange={(e) => handleChange(e)}
+                  onKeyDown={(e) => handleKeyDown(e)}
+                >
+                  <option value="" disabled>
+                    Select your role
+                  </option>
+                  <option value="student">Student</option>
+                  <option value="teacher">Teacher</option>
+                </select>
+              </div>
+              {errors.some((err) => err.field === "role") && (
                 <p className="text-red-500 text-sm">
                   {errors.find((err) => err.field === "role")?.message}
                 </p>
               )}
-          </div>
+            </div>
 
-          <button className="p-2 px-4 mt-6 bg-sky-500 rounded-xl text-slate-50 font-bold" 
-            onClick={(e) => {
-            e.preventDefault();
-            handleSignIn()}}
-          >
-            Login
-          </button>
+            <button
+              className="p-2 px-4 mt-6 bg-sky-500 rounded-xl text-slate-50 font-bold"
+              onClick={(e) => {
+                e.preventDefault();
+                handleSignIn();
+              }}
+            >
+              Login
+            </button>
 
-          <div
-            className="text-center text-blue-gray-500 font-medium mt-4"
-          >
-            
-            {/* link to signup */}
-            Chưa có tài khoản?
-            <Link className="ml-2 text-red-500 font-bold" href="/auth/signup">Sign Up</Link>
-          </div>
-        </form>
-      </div>
-      
-    </section>
-
+            <div className="text-center text-blue-gray-500 font-medium mt-4">
+              {/* link to signup */}
+              Chưa có tài khoản?
+              <Link className="ml-2 text-red-500 font-bold" href="/auth/signup">
+                Sign Up
+              </Link>
+            </div>
+          </form>
+        </div>
+      </section>
     </div>
   );
 }
