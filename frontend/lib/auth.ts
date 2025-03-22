@@ -22,6 +22,7 @@ declare module "next-auth" {
 
 }
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
@@ -59,7 +60,7 @@ authorize: async (credentials) => {
     }),
   ],
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/auth/login",
     signOut: "/auth/signout",
   }
     , callbacks: {
