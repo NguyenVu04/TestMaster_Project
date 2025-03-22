@@ -1,6 +1,7 @@
 /* app/page.module.css */
 
 /* Navigation */
+
 .header {
     @apply flex items-center justify-between py-4 px-8 shadow-sm;
   }
@@ -50,18 +51,7 @@
     @apply w-full md:w-1/2 flex justify-center mb-8 md:mb-0;
   }
   
-  /* How It Works Section */
-  .howItWorksSection {
-    @apply min-h-screen flex flex-col items-center justify-center py-16 px-8;
-  }
-  
-  .howItWorksTitle {
-    @apply text-3xl md:text-4xl font-bold mb-8 text-gray-900;
-  }
-  
-  .howItWorksText {
-    @apply max-w-4xl text-center text-gray-700 space-y-4;
-  }
+
   
   /* Features Section */
   .featuresSection {

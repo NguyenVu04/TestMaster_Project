@@ -6,7 +6,7 @@ import styles from './page.module.css';
 
 export default function Home(): ReactElement {
   return (
-    <div>
+    <div className='bg-white'>
       {/* Phần Hero (Màn hình đầu tiên) */}
       <section className={styles.heroSection}>
         {/* Nội dung bên trái */}
@@ -34,20 +34,7 @@ export default function Home(): ReactElement {
         </div>
       </section>
 
-      {/* Màn hình thứ hai (Cách hoạt động) */}
-      <section id="how-it-works" className={styles.howItWorksSection}>
-        <h2 className={styles.howItWorksTitle}>Cách hoạt động</h2>
-        <div className={styles.howItWorksText}>
-          <p>
-            Chúng tôi có một loạt các chủ đề và bài kiểm tra giúp bạn học tập. Mỗi phút, bạn có thể học được điều gì đó mới, luyện tập với các bài kiểm tra nhanh và đánh giá sự tiến bộ của mình ngay lập tức.
-          </p>
-          <p>
-            Đăng ký hoặc đăng nhập để theo dõi tiến trình, thách thức bạn bè và chia sẻ điểm số của bạn.
-          </p>
-        </div>
-      </section>
-
-      {/* Màn hình thứ ba (Tính năng) */}
+      {/* Màn hình thứ hai (Tính năng) */}
       <section id="features" className={styles.featuresSection}>
         <h2 className={styles.featuresTitle}>
           Online Exam System có những <span className={styles.featuresHighlight}>tính năng tuyệt vời</span> như:
@@ -77,7 +64,7 @@ export default function Home(): ReactElement {
         </div>
       </section>
 
-      {/* Màn hình thứ tư (Về chúng tôi) */}
+      {/* Màn hình thứ ba (Về chúng tôi) */}
       <section id="about-us" className={styles.aboutUsSection}>
         <h2 className={styles.aboutUsTitle}>Về chúng tôi</h2>
         <div className={styles.aboutUsText}>
@@ -90,7 +77,7 @@ export default function Home(): ReactElement {
         </div>
       </section>
 
-      {/* Màn hình thứ năm (Hành trình học tập) */}
+      {/* Màn hình thứ tư (Hành trình học tập) */}
       <section id="learning-journey" className={styles.learningJourneySection}>
         <h2 className={styles.learningJourneyTitle}>
           Hãy khám phá{' '}
