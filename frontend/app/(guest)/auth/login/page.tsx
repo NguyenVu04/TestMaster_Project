@@ -1,3 +1,4 @@
+
 'use client'
 import React, { Suspense, useState } from "react";
 import Image from 'next/image'
@@ -5,6 +6,7 @@ import Link from "next/link";
 
 import signinIm from '@/public/Illusttration.png';
 import { validateLoginData } from "@/lib/validation/auth";
+
 
 
 export default function SignIn() {
@@ -15,8 +17,8 @@ export default function SignIn() {
     role: "student"
   });
 
-  const [errors, setErrors] = useState<any[]>([]);
 
+  const [errors, setErrors] = useState<any[]>([]);
 
   function handleChange(event: any) {
     const { id, value } = event.target;
@@ -29,6 +31,7 @@ export default function SignIn() {
     setErrors(er);
   }
 
+
   async function handleSignIn() {
     const {success, errors} = validateLoginData(infor)
     console.log(errors)
@@ -38,8 +41,7 @@ export default function SignIn() {
     }
     console.log("Login success", infor);
     reset();
-    
-  }
+
 
   const reset = () => {
     setInfor({
@@ -58,6 +60,7 @@ export default function SignIn() {
   return (
     <div className="bg-white">
       <section className="flex gap-4">
+
       <div className="basis-3/5 max-h-fit hidden lg:block">
         <Image
           alt = "Sign in"
@@ -100,18 +103,41 @@ export default function SignIn() {
               className="-mb-3 font-medium"
             >
               Password
+
             </div>
-            <div className="flex relative">
+          </div>
+          <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2 text-black">
+            <div className="mb-1 flex flex-col gap-6">
+              <div color="blue-gray" className="-mb-3 font-medium">
+                Email
+              </div>
               <input
+
                 id="1"
                 value={infor.password}
                 placeholder="********"
                 className="w-full p-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-md shadow-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                 autoComplete="password"
+
                 onChange={(e) => handleChange(e)}
                 onKeyDown={(e) => handleKeyDown(e)}
               />
+              <div color="blue-gray" className="-mb-3 font-medium">
+                Password
+              </div>
+              <div className="flex relative">
+                <input
+                  id="1"
+                  value={infor.password}
+                  placeholder="********"
+                  className="p-2 !border-t-blue-gray-200 focus:!border-t-gray-900"
+                  autoComplete="password"
+                  onChange={(e) => handleChange(e)}
+                  onKeyDown={(e) => handleKeyDown(e)}
+                />
+              </div>
             </div>
+
             {errors.some((err) => err.field === "password") && (
                 <p className="text-red-500 text-sm">
                   {errors.find((err) => err.field === "password")?.message}
@@ -163,6 +189,7 @@ export default function SignIn() {
       </div>
       
     </section>
+
     </div>
   );
 }
