@@ -37,7 +37,7 @@ public class StudentService {
                         .encode(request.getPassword()));
         accountRepository.save(account);
 
-        Student student = new Student(user.getId());
+        Student student = new Student(user);
 
         return studentRepository.save(student);
     }
