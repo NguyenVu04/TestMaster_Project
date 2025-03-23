@@ -23,15 +23,13 @@ public class StudentService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Student registerStudent(SignupRequestDTO request) {
-
-        User user = new User();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setPhoneNumber(request.getPhoneNumber());
+    public Student registerStudent(SignupRequestDTO request) throws Exception {
+        User user = new User(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getPhoneNumber());
         user = userRepository.save(user);
 
-        // Create new account
         Account account = new Account(
                 user,
                 request.getEmail(),
@@ -39,7 +37,6 @@ public class StudentService {
                         .encode(request.getPassword()));
         accountRepository.save(account);
 
-        // Create new student
         Student student = new Student(user.getId());
 
         return studentRepository.save(student);

@@ -6,7 +6,6 @@ import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -29,12 +28,12 @@ public class ExamResult {
     @Column(name = "end_time")
     private Timestamp endTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "exam_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Exam exam;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", referencedColumnName = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private Student student;
 
     public ExamResult() {

@@ -3,6 +3,7 @@ package project.testmaster.backend.model;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
@@ -13,6 +14,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -52,6 +55,14 @@ public class Exam {
 
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ExamResult> examResult;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "exam_question",
+        joinColumns = @JoinColumn(name = "exam_id"),
+        inverseJoinColumns = @JoinColumn(name = "question_id")
+    )
+    private Set<Question> questions;
 
     public Exam() {
     }

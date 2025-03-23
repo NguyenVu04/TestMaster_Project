@@ -54,7 +54,7 @@ CREATE TABLE "notification" (
     "receiver_id" UUID NOT NULL,
     "title" VARCHAR(50) NOT NULL,
     "content" TEXT NOT NULL,
-    "created_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "seen" BOOLEAN NOT NULL
 );
 

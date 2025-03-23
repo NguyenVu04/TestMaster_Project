@@ -12,7 +12,7 @@ public class Account {
     @Column(name = "user_id")
     private UUID userId;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
