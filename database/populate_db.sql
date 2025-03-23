@@ -91,7 +91,7 @@ INSERT INTO "exam_question" ("exam_id", "question_id") VALUES
 ('55555555-5555-5555-5555-555555555555', '55555555-5555-5555-5555-555555555555');
 
 -- Insert data into "exam_student" table
-INSERT INTO "exam_student" ("attemp_id", "exam_id", "student_id", "score", "feedback", "start_time", "end_time") VALUES
+INSERT INTO "exam_student" ("attempt_id", "exam_id", "student_id", "score", "feedback", "start_time", "end_time") VALUES
 (1, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 95.0, 'Great job!', '2025-03-21 09:00:00', '2025-03-21 10:00:00'),
 (2, '22222222-2222-2222-2222-222222222222', '22222222-2222-2222-2222-222222222222', 88.0, 'Well done!', '2025-03-22 09:00:00', '2025-03-22 10:00:00'),
 (3, '33333333-3333-3333-3333-333333333333', '33333333-3333-3333-3333-333333333333', 92.0, 'Excellent!', '2025-03-23 09:00:00', '2025-03-23 10:00:00'),
@@ -99,7 +99,7 @@ INSERT INTO "exam_student" ("attemp_id", "exam_id", "student_id", "score", "feed
 (5, '55555555-5555-5555-5555-555555555555', '55555555-5555-5555-5555-555555555555', 90.0, 'Nice work!', '2025-03-25 09:00:00', '2025-03-25 10:00:00');
 
 -- Insert data into "exam_student_answer" table
-INSERT INTO "exam_student_answer" ("attemp_id", "exam_id", "student_id", "question_id", "answer") VALUES
+INSERT INTO "exam_student_answer" ("attempt_id", "exam_id", "student_id", "question_id", "answer") VALUES
 (1, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', '4'),
 (2, '22222222-2222-2222-2222-222222222222', '22222222-2222-2222-2222-222222222222', '22222222-2222-2222-2222-222222222222', 'It is a theory by Einstein.'),
 (3, '33333333-3333-3333-3333-333333333333', '33333333-3333-3333-3333-333333333333', '33333333-3333-3333-3333-333333333333', 'Paris'),

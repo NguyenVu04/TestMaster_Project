@@ -65,23 +65,23 @@ CREATE TABLE "exam_question" (
 );
 
 CREATE TABLE "exam_student" (
-    "attemp_id" SMALLSERIAL NOT NULL,
+    "attempt_id" SMALLSERIAL NOT NULL,
     "exam_id" UUID NOT NULL,
     "student_id" UUID NOT NULL,
     "score" REAL,
     "feedback" TEXT,
     "start_time" TIMESTAMP NOT NULL,
     "end_time" TIMESTAMP NOT NULL,
-    PRIMARY KEY ("attemp_id", "exam_id", "student_id")
+    PRIMARY KEY ("attempt_id", "exam_id", "student_id")
 );
 
 CREATE TABLE "exam_student_answer" (
-    "attemp_id" SMALLSERIAL NOT NULL,
+    "attempt_id" SMALLSERIAL NOT NULL,
     "exam_id" UUID NOT NULL,
     "student_id" UUID NOT NULL,
     "question_id" UUID NOT NULL,
     "answer" TEXT,
-    PRIMARY KEY ("attemp_id", "exam_id", "student_id", "question_id")
+    PRIMARY KEY ("attempt_id", "exam_id", "student_id", "question_id")
 );
 
 ALTER TABLE "account" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
