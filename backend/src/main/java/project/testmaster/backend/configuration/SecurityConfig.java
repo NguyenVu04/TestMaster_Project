@@ -13,12 +13,22 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+/**
+ * Security configuration class for setting up security-related configurations.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
     private EnvConfig env;
 
+    /**
+     * Configures the security filter chain.
+     *
+     * @param http the HttpSecurity to modify
+     * @return the configured SecurityFilterChain
+     * @throws Exception if an error occurs while configuring the security filter chain
+     */
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -30,6 +40,11 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Configures CORS settings.
+     *
+     * @return the configured UrlBasedCorsConfigurationSource
+     */
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList(env.getFrontendUrl()));
@@ -39,6 +54,11 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Creates a PasswordEncoder bean.
+     *
+     * @return the PasswordEncoder bean
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();

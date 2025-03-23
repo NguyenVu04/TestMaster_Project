@@ -1,14 +1,21 @@
 package project.testmaster.backend.model;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Represents the result of an exam taken by a student.
+ */
 @Entity
 @Table(name = "exam_student")
 public class ExamResult {
@@ -35,15 +42,103 @@ public class ExamResult {
     @JoinColumn(name = "student_id", referencedColumnName = "user_id", insertable = false, updatable = false, nullable = false)
     private Student student;
 
+    @OneToMany(mappedBy = "examResult", fetch = FetchType.LAZY)
+    private List<StudentAnswer> studentAnswers;
+
+    /**
+     * Default constructor.
+     */
     public ExamResult() {
     }
 
+    /**
+     * Constructs a new ExamResult with the specified details.
+     *
+     * @param exam      the exam associated with this result
+     * @param student   the student who took the exam
+     * @param score     the score obtained by the student
+     * @param feedback  the feedback for the student
+     * @param startTime the start time of the exam
+     * @param endTime   the end time of the exam
+     */
     public ExamResult(Exam exam, Student student, float score, String feedback, Timestamp startTime, Timestamp endTime) {
+        this.exam = exam;
+        this.student = student;
         this.score = score;
         this.feedback = feedback;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.exam = exam;
-        this.student = student;
+    }
+
+    /**
+     * Returns the ID of this exam result.
+     *
+     * @return the ID of this exam result
+     */
+    public ExamResultId getId() {
+        return id;
+    }
+
+    /**
+     * Returns the score obtained by the student.
+     *
+     * @return the score obtained by the student
+     */
+    public float getScore() {
+        return score;
+    }
+
+    /**
+     * Returns the feedback for the student.
+     *
+     * @return the feedback for the student
+     */
+    public String getFeedback() {
+        return feedback;
+    }
+
+    /**
+     * Returns the start time of the exam.
+     *
+     * @return the start time of the exam
+     */
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * Returns the end time of the exam.
+     *
+     * @return the end time of the exam
+     */
+    public Timestamp getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * Returns the exam associated with this result.
+     *
+     * @return the exam associated with this result
+     */
+    public Exam getExam() {
+        return exam;
+    }
+
+    /**
+     * Returns the student who took the exam.
+     *
+     * @return the student who took the exam
+     */
+    public Student getStudent() {
+        return student;
+    }
+
+    /**
+     * Returns the list of student answers associated with this exam result.
+     *
+     * @return the list of student answers
+     */
+    public List<StudentAnswer> getStudentAnswers() {
+        return Collections.unmodifiableList(studentAnswers);
     }
 }

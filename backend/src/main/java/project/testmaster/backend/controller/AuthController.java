@@ -70,6 +70,41 @@ public class AuthController {
         }
     }
 
+    @Operation(summary = "Sign in a student", description = "Sign in a student")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Student signed in successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request while signing in student"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized while signing in student"),
+            @ApiResponse(responseCode = "500", description = "Internal server error while signing in student")
+    })
+    @PostMapping("/signin/student")
+    public ResponseEntity<Void> signinStudent(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "The student to sign in", 
+        content = @Content(
+            schema = @Schema(implementation = SignupRequestDTO.class),
+            examples = @ExampleObject(
+                value = "{ \"email\": \"john.doe@example.com\", \"password\": \"admin\" }"
+            )
+        )
+    ) @Valid @RequestBody SignupRequestDTO request) {
+        try {
+
+            boolean result = studentService.login(request.getEmail(), request.getPassword());
+
+            if (result) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+        } catch (Exception e) {
+
+            logger.error("Error while signing in student", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
     @Operation(summary = "Sign up a teacher", description = "Sign up a teacher")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Teacher signed up successfully"),
@@ -101,6 +136,41 @@ public class AuthController {
         } catch (Exception e) {
 
             logger.error("Error while registering teacher", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @Operation(summary = "Sign in a teacher", description = "Sign in a teacher")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Teacher signed in successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request while signing in teacher"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized while signing in teacher"),
+            @ApiResponse(responseCode = "500", description = "Internal server error while signing in teacher")
+    })
+    @PostMapping("/signin/teacher")
+    public ResponseEntity<Void> signinTeacher(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "The teacher to sign in", 
+        content = @Content(
+            schema = @Schema(implementation = SignupRequestDTO.class),
+            examples = @ExampleObject(
+                value = "{ \"email\": \" teach1@email.com\", \"password\": \"admin\" }"
+            )
+        )
+    ) @Valid @RequestBody SignupRequestDTO request) {
+        try {
+
+            boolean result = teacherService.login(request.getEmail(), request.getPassword());
+
+            if (result) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+        } catch (Exception e) {
+
+            logger.error("Error while signing in teacher", e);
             return ResponseEntity.internalServerError().build();
 
         }

@@ -11,6 +11,9 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Represents an admin in the system.
+ */
 @Entity
 @Table(name = "admin")
 public class Admin {
@@ -23,18 +26,36 @@ public class Admin {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    /**
+     * Default constructor.
+     */
     public Admin() {
     }
 
+    /**
+     * Constructs a new Admin with the specified user.
+     *
+     * @param user the user associated with this admin
+     */
     public Admin(User user) {
         this.user = user;
     }
 
+    /**
+     * Returns the user ID of this admin.
+     *
+     * @return the user ID of this admin
+     */
     public UUID getUserId() {
         return userId;
     }
 
+    /**
+     * Returns the user associated with this admin.
+     *
+     * @return the user associated with this admin
+     */
     public User getUser() {
         return user;
-}
+    }
 }
