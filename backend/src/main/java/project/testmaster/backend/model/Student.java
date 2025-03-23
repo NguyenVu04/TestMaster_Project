@@ -33,6 +33,10 @@ public class Student {
     public Student() {
     }
 
+    public Student(UUID userId) {
+        this.userId = userId;
+    }
+
     public Student(User user) {
         this.user = user;
     }

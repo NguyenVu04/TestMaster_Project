@@ -32,8 +32,9 @@ public class StudentAnswer {
     public StudentAnswer() {
     }
 
-    public StudentAnswer(StudentAnswerId id, String answer) {
-        this.id = id;
+    public StudentAnswer(ExamResult examResult, Question question, String answer) {
+        this.examResult = examResult;
+        this.question = question;
         this.answer = answer;
     }
 

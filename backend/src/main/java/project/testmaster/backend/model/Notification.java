@@ -45,9 +45,9 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(UUID senderId, UUID receiverId, String title, String content, Timestamp createdAt) {
-        this.sender = new User(senderId);
-        this.receiver = new User(receiverId);
+    public Notification(User sender, User receiver, String title, String content, Timestamp createdAt) {
+        this.sender = sender;
+        this.receiver = receiver;
         this.title = title;
         this.content = content;
         this.createdAt = Timestamp.from(Instant.now());

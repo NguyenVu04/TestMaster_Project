@@ -1,7 +1,6 @@
 package project.testmaster.backend.model;
 
 import java.sql.Timestamp;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -29,21 +28,22 @@ public class ExamResult {
     private Timestamp endTime;
 
     @ManyToOne
-    @JoinColumn(name = "exam_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "exam_id", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
     private Exam exam;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "student_id", referencedColumnName = "user_id", insertable = false, updatable = false, nullable = false)
     private Student student;
 
     public ExamResult() {
     }
 
-    public ExamResult(UUID studentId, UUID examId, float score, String feedback, Timestamp startTime, Timestamp endTime) {
+    public ExamResult(Exam exam, Student student, float score, String feedback, Timestamp startTime, Timestamp endTime) {
         this.score = score;
         this.feedback = feedback;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.id = new ExamResultId(studentId, examId);
+        this.exam = exam;
+        this.student = student;
     }
 }

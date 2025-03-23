@@ -67,6 +67,10 @@ public class Exam {
     public Exam() {
     }
 
+    public Exam(UUID id) {
+        this.id = id;
+    }
+
     public Exam(
             Teacher teacher,
             String title,
