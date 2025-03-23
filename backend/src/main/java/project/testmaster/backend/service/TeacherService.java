@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 
 import project.testmaster.backend.dto.SignupRequestDTO;
 import project.testmaster.backend.model.Account;
-import project.testmaster.backend.model.Student;
 import project.testmaster.backend.model.Teacher;
 import project.testmaster.backend.model.User;
 import project.testmaster.backend.repository.AccountRepository;
-import project.testmaster.backend.repository.StudentRepository;
 import project.testmaster.backend.repository.TeacherRepository;
 import project.testmaster.backend.repository.UserRepository;
 
@@ -42,7 +40,7 @@ public class TeacherService {
         accountRepository.save(account);
 
         // Create new student
-        Teacher teacher = new Teacher(user);
+        Teacher teacher = new Teacher(user.getId());
 
         return teacherRepository.save(teacher);
     }

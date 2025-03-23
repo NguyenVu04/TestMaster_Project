@@ -40,7 +40,7 @@ public class StudentService {
         accountRepository.save(account);
 
         // Create new student
-        Student student = new Student(user);
+        Student student = new Student(user.getId());
 
         return studentRepository.save(student);
     }

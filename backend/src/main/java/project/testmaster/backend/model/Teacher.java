@@ -8,15 +8,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "teacher")
 public class Teacher {
@@ -29,8 +23,11 @@ public class Teacher {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public Teacher(User user) {
-        this.user = user;
+    public Teacher() {
+    }
+
+    public Teacher(UUID userId) {
+        this.userId = userId;
     }
 
     public UUID getUserId() {
