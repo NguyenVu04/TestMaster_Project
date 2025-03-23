@@ -26,8 +26,8 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(UUID userId) {
-        this.userId = userId;
+    public Admin(User user) {
+        this.user = user;
     }
 
     public UUID getUserId() {

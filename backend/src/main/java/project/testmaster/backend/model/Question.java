@@ -46,6 +46,10 @@ public class Question {
     public Question() {
     }
 
+    public Question(UUID id) {
+        this.id = id;
+    }
+
     public Question(QuestionType type, String content, String[] mediaUrl, String[] options, String answer) {
         this.type = type;
         this.content = content;

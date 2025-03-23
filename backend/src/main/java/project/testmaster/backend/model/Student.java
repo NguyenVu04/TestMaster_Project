@@ -37,6 +37,10 @@ public class Student {
         this.userId = userId;
     }
 
+    public Student(User user) {
+        this.user = user;
+    }
+
     public UUID getUserId() {
         return user.getId();
     }

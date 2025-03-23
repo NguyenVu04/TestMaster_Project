@@ -29,6 +29,10 @@ public class User {
     public User() {
     }
 
+    public User(UUID id) {
+        this.id = id;
+    }
+
     public User(String firstName, String lastName, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
