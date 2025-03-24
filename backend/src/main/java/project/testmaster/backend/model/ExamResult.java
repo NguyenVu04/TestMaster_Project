@@ -22,7 +22,7 @@ public class ExamResult {
     @EmbeddedId
     private ExamResultId id;
 
-    @Column(name = "score")
+    @Column(name = "total_score")
     private float score;
 
     @Column(name = "feedback")

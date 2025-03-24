@@ -10,7 +10,7 @@ import project.testmaster.backend.model.Exam;
 public class ExamInfoDTO {
     private String title;
     private String description;
-    private Integer attemptLimit;
+    private Short attemptLimit;
     private Long startTime;
     private Long endTime;
     private Integer timeLimit;
@@ -40,7 +40,7 @@ public class ExamInfoDTO {
     public ExamInfoDTO(
             String title,
             String description,
-            Integer attemptLimit,
+            short attemptLimit,
             Long startTime,
             Long endTime,
             Integer timeLimit,
@@ -100,7 +100,7 @@ public class ExamInfoDTO {
      *
      * @return the attempt limit for the exam
      */
-    public Integer getAttemptLimit() {
+    public Short getAttemptLimit() {
         return attemptLimit;
     }
 

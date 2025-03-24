@@ -42,7 +42,7 @@ public class Exam {
     private String description;
 
     @Column(name = "attempt_limit")
-    private int attemptLimit;
+    private short attemptLimit;
 
     @Column(name = "passcode")
     private String passcode;
@@ -98,7 +98,7 @@ public class Exam {
             Teacher teacher,
             String title,
             String description,
-            int attemptLimit,
+            short attemptLimit,
             String passcode,
             Timestamp startTime,
             Timestamp endTime,
@@ -173,7 +173,7 @@ public class Exam {
      *
      * @return the attempt limit for the exam
      */
-    public int getAttemptLimit() {
+    public short getAttemptLimit() {
         return attemptLimit;
     }
 
@@ -236,7 +236,7 @@ public class Exam {
      *
      * @param attemptLimit the new attempt limit for the exam
      */
-    public void setAttemptLimit(int attemptLimit) {
+    public void setAttemptLimit(short attemptLimit) {
         this.attemptLimit = attemptLimit;
     }
 
