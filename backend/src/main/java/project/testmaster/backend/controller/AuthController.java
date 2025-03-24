@@ -22,6 +22,7 @@ import project.testmaster.backend.dto.SigninRequestDTO;
 import project.testmaster.backend.dto.SignupRequestDTO;
 import project.testmaster.backend.service.StudentService;
 import project.testmaster.backend.service.TeacherService;
+import project.testmaster.backend.utils.JwtUtils;
 
 @RestController()
 @RequestMapping("/api/auth")
@@ -34,6 +35,9 @@ public class AuthController {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Operation(summary = "Sign up a student", description = "Sign up a student")
     @ApiResponses(value = {
@@ -73,13 +77,13 @@ public class AuthController {
 
     @Operation(summary = "Sign in a student", description = "Sign in a student")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Student signed in successfully"),
+            @ApiResponse(responseCode = "200", description = "Student signed in successfully", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "Bad request while signing in student"),
             @ApiResponse(responseCode = "401", description = "Unauthorized while signing in student"),
             @ApiResponse(responseCode = "500", description = "Internal server error while signing in student")
     })
     @PostMapping("/signin/student")
-    public ResponseEntity<Void> signinStudent(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+    public ResponseEntity<String> signinStudent(@io.swagger.v3.oas.annotations.parameters.RequestBody(
         description = "The student to sign in", 
         content = @Content(
             schema = @Schema(implementation = SigninRequestDTO.class),
@@ -93,7 +97,7 @@ public class AuthController {
             boolean result = studentService.login(request.getEmail(), request.getPassword());
 
             if (result) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().body(jwtUtils.generateToken(request.getEmail(), "STUDENT"));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -144,18 +148,18 @@ public class AuthController {
 
     @Operation(summary = "Sign in a teacher", description = "Sign in a teacher")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Teacher signed in successfully"),
+            @ApiResponse(responseCode = "200", description = "Teacher signed in successfully", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "Bad request while signing in teacher"),
             @ApiResponse(responseCode = "401", description = "Unauthorized while signing in teacher"),
             @ApiResponse(responseCode = "500", description = "Internal server error while signing in teacher")
     })
     @PostMapping("/signin/teacher")
-    public ResponseEntity<Void> signinTeacher(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+    public ResponseEntity<String> signinTeacher(@io.swagger.v3.oas.annotations.parameters.RequestBody(
         description = "The teacher to sign in", 
         content = @Content(
             schema = @Schema(implementation = SigninRequestDTO.class),
             examples = @ExampleObject(
-                value = "{ \"email\": \" teach1@email.com\", \"password\": \"admin\" }"
+                value = "{ \"email\": \"teach1@email.com\", \"password\": \"admin\" }"
             )
         )
     ) @Valid @RequestBody SigninRequestDTO request) {
@@ -164,7 +168,7 @@ public class AuthController {
             boolean result = teacherService.login(request.getEmail(), request.getPassword());
 
             if (result) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().body(jwtUtils.generateToken(request.getEmail(), "TEACHER"));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
