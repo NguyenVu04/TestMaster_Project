@@ -18,12 +18,12 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "exam_student")
-public class ExamResult {
+public class ExamSession {
     @EmbeddedId
-    private ExamResultId id;
+    private ExamSessionId id;
 
     @Column(name = "total_score")
-    private float score;
+    private Float totalScore;
 
     @Column(name = "feedback")
     private String feedback;
@@ -48,7 +48,7 @@ public class ExamResult {
     /**
      * Default constructor.
      */
-    public ExamResult() {
+    public ExamSession() {
     }
 
     /**
@@ -56,15 +56,18 @@ public class ExamResult {
      *
      * @param exam      the exam associated with this result
      * @param student   the student who took the exam
-     * @param score     the score obtained by the student
      * @param feedback  the feedback for the student
      * @param startTime the start time of the exam
      * @param endTime   the end time of the exam
      */
-    public ExamResult(Exam exam, Student student, float score, String feedback, Timestamp startTime, Timestamp endTime) {
+    public ExamSession(
+            Exam exam,
+            Student student,
+            String feedback,
+            Timestamp startTime,
+            Timestamp endTime) {
         this.exam = exam;
         this.student = student;
-        this.score = score;
         this.feedback = feedback;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -75,17 +78,17 @@ public class ExamResult {
      *
      * @return the ID of this exam result
      */
-    public ExamResultId getId() {
+    public ExamSessionId getId() {
         return id;
     }
 
     /**
-     * Returns the score obtained by the student.
+     * Returns the total score obtained by the student.
      *
-     * @return the score obtained by the student
+     * @return the total score obtained by the student
      */
-    public float getScore() {
-        return score;
+    public float getTotalScore() {
+        return totalScore;
     }
 
     /**

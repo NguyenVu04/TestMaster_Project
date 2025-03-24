@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
+import project.testmaster.backend.dto.SigninRequestDTO;
 import project.testmaster.backend.dto.SignupRequestDTO;
 import project.testmaster.backend.service.StudentService;
 import project.testmaster.backend.service.TeacherService;
@@ -81,12 +82,12 @@ public class AuthController {
     public ResponseEntity<Void> signinStudent(@io.swagger.v3.oas.annotations.parameters.RequestBody(
         description = "The student to sign in", 
         content = @Content(
-            schema = @Schema(implementation = SignupRequestDTO.class),
+            schema = @Schema(implementation = SigninRequestDTO.class),
             examples = @ExampleObject(
                 value = "{ \"email\": \"john.doe@example.com\", \"password\": \"admin\" }"
             )
         )
-    ) @Valid @RequestBody SignupRequestDTO request) {
+    ) @Valid @RequestBody SigninRequestDTO request) {
         try {
 
             boolean result = studentService.login(request.getEmail(), request.getPassword());
@@ -152,12 +153,12 @@ public class AuthController {
     public ResponseEntity<Void> signinTeacher(@io.swagger.v3.oas.annotations.parameters.RequestBody(
         description = "The teacher to sign in", 
         content = @Content(
-            schema = @Schema(implementation = SignupRequestDTO.class),
+            schema = @Schema(implementation = SigninRequestDTO.class),
             examples = @ExampleObject(
                 value = "{ \"email\": \" teach1@email.com\", \"password\": \"admin\" }"
             )
         )
-    ) @Valid @RequestBody SignupRequestDTO request) {
+    ) @Valid @RequestBody SigninRequestDTO request) {
         try {
 
             boolean result = teacherService.login(request.getEmail(), request.getPassword());

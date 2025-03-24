@@ -23,7 +23,7 @@ public class StudentAnswer {
         @JoinColumn(name = "student_id", referencedColumnName = "student_id", insertable = false, updatable = false),
         @JoinColumn(name = "exam_id", referencedColumnName = "exam_id", insertable = false, updatable = false)
     })
-    private ExamResult examResult;
+    private ExamSession examResult;
 
     @ManyToOne
     @JoinColumn(name = "question_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -32,7 +32,7 @@ public class StudentAnswer {
     public StudentAnswer() {
     }
 
-    public StudentAnswer(ExamResult examResult, Question question, String answer) {
+    public StudentAnswer(ExamSession examResult, Question question, String answer) {
         this.examResult = examResult;
         this.question = question;
         this.answer = answer;
@@ -46,7 +46,7 @@ public class StudentAnswer {
         return answer;
     }
 
-    public ExamResult getExamResult() {
+    public ExamSession getExamResult() {
         return examResult;
     }
 

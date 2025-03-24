@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 @Embeddable
 @EqualsAndHashCode
-public class ExamResultId {
+public class ExamSessionId {
     @Column(name = "attempt_id")
     private short attemptId;
     
@@ -18,10 +18,10 @@ public class ExamResultId {
     @Column(name = "exam_id", insertable = false, updatable = false)
     private UUID examId;
 
-    public ExamResultId() {
+    public ExamSessionId() {
     }
 
-    public ExamResultId(UUID studentId, UUID examId) {
+    public ExamSessionId(UUID studentId, UUID examId) {
         this.studentId = studentId;
         this.examId = examId;
     }

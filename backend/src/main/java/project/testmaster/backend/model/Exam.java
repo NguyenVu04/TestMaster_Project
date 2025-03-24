@@ -14,8 +14,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -57,15 +55,10 @@ public class Exam {
     private int timeLimit;
 
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ExamResult> examResult;
+    private List<ExamSession> examResult;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "exam_question",
-        joinColumns = @JoinColumn(name = "exam_id"),
-        inverseJoinColumns = @JoinColumn(name = "question_id")
-    )
-    private Set<Question> questions;
+    @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ExamQuestion> examQuestions;
 
     /**
      * Default constructor.
@@ -209,7 +202,7 @@ public class Exam {
      *
      * @return the list of exam results
      */
-    public List<ExamResult> getExamResult() {
+    public List<ExamSession> getExamResult() {
         return Collections.unmodifiableList(this.examResult);
     }
 
