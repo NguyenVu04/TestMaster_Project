@@ -28,7 +28,7 @@ public class Student {
     private User user;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ExamResult> examResults;
+    private List<ExamSession> examResults;
 
     public Student() {
     }
@@ -49,7 +49,7 @@ public class Student {
         return user;
     }
 
-    public List<ExamResult> getExamResults() {
+    public List<ExamSession> getExamResults() {
         return Collections.unmodifiableList(examResults);
     }
 }

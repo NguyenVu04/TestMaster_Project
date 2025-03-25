@@ -1,5 +1,7 @@
 package project.testmaster.backend.service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +29,15 @@ public class TeacherService {
         Teacher teacher = new Teacher(user);
 
         return teacherRepository.save(teacher);
+    }
+
+    public Teacher getTeacherById(UUID id) {
+        return teacherRepository.findById(id).orElse(null);
+    }
+
+    public boolean login(String email, String password) {
+        UUID id = userService.login(email, password);
+
+        return id != null && teacherRepository.existsById(id);
     }
 }

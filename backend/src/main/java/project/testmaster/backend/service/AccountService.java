@@ -28,4 +28,8 @@ public class AccountService {
     public Account getAccountByEmail(String email) {
         return accountRepository.findByEmail(email).orElse(null);
     }
+
+    public boolean checkPassword(Account account, String password) {
+        return passwordEncoder.matches(password, account.getPassword());
+    }
 }

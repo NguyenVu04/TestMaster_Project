@@ -5,17 +5,14 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import project.testmaster.backend.model.Exam;
 import project.testmaster.backend.repository.ExamRepository;
-// import project.testmaster.backend.repository.ExamResultRepository;
 
 @Service
 public class ExamService {
     @Autowired
     private ExamRepository examRepository;
-
-    // @Autowired
-    // private ExamResultRepository examResultRepository;
 
     public Exam getExamById(UUID id) {
         return examRepository.findById(id).orElse(null);
@@ -27,5 +24,13 @@ public class ExamService {
 
     public void deleteExam(UUID id) {
         examRepository.deleteById(id);
+    }
+
+    public Exam updateExam(Exam exam) {
+        if (examRepository.existsById(exam.getId())) {
+            return examRepository.save(exam);
+        } else {
+            throw new EntityNotFoundException("Exam not found");
+        }
     }
 }

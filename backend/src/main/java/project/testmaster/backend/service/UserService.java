@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import project.testmaster.backend.model.Account;
 import project.testmaster.backend.model.User;
 import project.testmaster.backend.repository.UserRepository;
 
@@ -35,5 +36,19 @@ public class UserService {
 
     public void deleteUser(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    public UUID login(String email, String password) {
+        Account account = accountService.getAccountByEmail(email);
+
+        if (account == null) {
+            return null;
+        }
+
+        if (!accountService.checkPassword(account, password)) {
+            return null;
+        }
+
+        return account.getUserId();
     }
 }

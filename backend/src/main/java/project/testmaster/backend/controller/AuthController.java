@@ -18,9 +18,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
+import project.testmaster.backend.dto.SigninRequestDTO;
 import project.testmaster.backend.dto.SignupRequestDTO;
 import project.testmaster.backend.service.StudentService;
 import project.testmaster.backend.service.TeacherService;
+import project.testmaster.backend.utils.JwtUtils;
 
 @RestController()
 @RequestMapping("/api/auth")
@@ -33,6 +35,9 @@ public class AuthController {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Operation(summary = "Sign up a student", description = "Sign up a student")
     @ApiResponses(value = {
@@ -70,6 +75,41 @@ public class AuthController {
         }
     }
 
+    @Operation(summary = "Sign in a student", description = "Sign in a student")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Student signed in successfully", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request while signing in student"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized while signing in student"),
+            @ApiResponse(responseCode = "500", description = "Internal server error while signing in student")
+    })
+    @PostMapping("/signin/student")
+    public ResponseEntity<String> signinStudent(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "The student to sign in", 
+        content = @Content(
+            schema = @Schema(implementation = SigninRequestDTO.class),
+            examples = @ExampleObject(
+                value = "{ \"email\": \"john.doe@example.com\", \"password\": \"admin\" }"
+            )
+        )
+    ) @Valid @RequestBody SigninRequestDTO request) {
+        try {
+
+            boolean result = studentService.login(request.getEmail(), request.getPassword());
+
+            if (result) {
+                return ResponseEntity.ok().body(jwtUtils.generateToken(request.getEmail(), "STUDENT"));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+        } catch (Exception e) {
+
+            logger.error("Error while signing in student", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
     @Operation(summary = "Sign up a teacher", description = "Sign up a teacher")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Teacher signed up successfully"),
@@ -101,6 +141,41 @@ public class AuthController {
         } catch (Exception e) {
 
             logger.error("Error while registering teacher", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @Operation(summary = "Sign in a teacher", description = "Sign in a teacher")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Teacher signed in successfully", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request while signing in teacher"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized while signing in teacher"),
+            @ApiResponse(responseCode = "500", description = "Internal server error while signing in teacher")
+    })
+    @PostMapping("/signin/teacher")
+    public ResponseEntity<String> signinTeacher(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "The teacher to sign in", 
+        content = @Content(
+            schema = @Schema(implementation = SigninRequestDTO.class),
+            examples = @ExampleObject(
+                value = "{ \"email\": \"teach1@email.com\", \"password\": \"admin\" }"
+            )
+        )
+    ) @Valid @RequestBody SigninRequestDTO request) {
+        try {
+
+            boolean result = teacherService.login(request.getEmail(), request.getPassword());
+
+            if (result) {
+                return ResponseEntity.ok().body(jwtUtils.generateToken(request.getEmail(), "TEACHER"));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+        } catch (Exception e) {
+
+            logger.error("Error while signing in teacher", e);
             return ResponseEntity.internalServerError().build();
 
         }

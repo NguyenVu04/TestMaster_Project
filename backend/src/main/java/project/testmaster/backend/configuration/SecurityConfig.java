@@ -10,26 +10,55 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import project.testmaster.backend.service.AccountDetailsService;
+import project.testmaster.backend.utils.JwtUtils;
+
+/**
+ * Security configuration class for setting up security-related configurations.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
     private EnvConfig env;
 
+    @Autowired
+    private AccountDetailsService userDetailsService;
+
+    /**
+     * Configures the security filter chain.
+     *
+     * @param http the HttpSecurity to modify
+     * @return the configured SecurityFilterChain
+     * @throws Exception if an error occurs while configuring the security filter
+     *                   chain
+     */
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(req -> req
+                        // .requestMatchers("api/teacher/**").hasRole("TEACHER")
+                        // .requestMatchers("api/student/**").hasRole("STUDENT")
+                        // .requestMatchers("api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("api/auth/**").permitAll()
+                        .requestMatchers("api/**").permitAll()
                         .anyRequest().permitAll())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable());
+                .csrf(csrf -> csrf.disable())
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
+    /**
+     * Configures CORS settings.
+     *
+     * @return the configured UrlBasedCorsConfigurationSource
+     */
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList(env.getFrontendUrl()));
@@ -39,8 +68,27 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Creates a PasswordEncoder bean.
+     *
+     * @return the PasswordEncoder bean
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    @Bean
+    JwtUtils jwtUtils() throws Exception {
+        return new JwtUtils(
+                env.getPrivateKeyPemPath(),
+                env.getPublicKeyPemPath(),
+                env.getExpiration());
+    }
+
+    JwtFilter jwtFilter() throws Exception {
+        return new JwtFilter(
+                jwtUtils(),
+                userDetailsService);
     }
 }
