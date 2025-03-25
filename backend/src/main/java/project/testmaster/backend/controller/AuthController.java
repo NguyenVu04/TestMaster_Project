@@ -19,13 +19,14 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import project.testmaster.backend.dto.SigninRequestDTO;
+import project.testmaster.backend.dto.SigninResponseDTO;
 import project.testmaster.backend.dto.SignupRequestDTO;
 import project.testmaster.backend.service.StudentService;
 import project.testmaster.backend.service.TeacherService;
 import project.testmaster.backend.utils.JwtUtils;
 
 @RestController()
-@RequestMapping("/api/auth")
+@RequestMapping(path = "/api/auth")
 public class AuthController {
 
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -48,15 +49,7 @@ public class AuthController {
     })
     @PostMapping("/signup/student")
     public ResponseEntity<Void> signupStudent(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                description = "The student to sign up", 
-                content = @Content(
-                    schema = @Schema(implementation = SignupRequestDTO.class),
-                    examples = @ExampleObject(
-                        value = "{ \"firstName\": \"John\", \"lastName\": \"Doe\", \"phoneNumber\": \"1234567890\", \"email\": \"john.doe@email.com\", \"password\": \"password123\" }"
-                    )
-                )
-            ) @Valid @RequestBody SignupRequestDTO request) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "The student to sign up", content = @Content(schema = @Schema(implementation = SignupRequestDTO.class), examples = @ExampleObject(value = "{ \"firstName\": \"John\", \"lastName\": \"Doe\", \"phoneNumber\": \"1234567890\", \"email\": \"john.doe@email.com\", \"password\": \"password123\" }"))) @Valid @RequestBody SignupRequestDTO request) {
         try {
 
             studentService.registerStudent(request);
@@ -83,21 +76,19 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Internal server error while signing in student")
     })
     @PostMapping("/signin/student")
-    public ResponseEntity<String> signinStudent(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-        description = "The student to sign in", 
-        content = @Content(
-            schema = @Schema(implementation = SigninRequestDTO.class),
-            examples = @ExampleObject(
-                value = "{ \"email\": \"john.doe@example.com\", \"password\": \"admin\" }"
-            )
-        )
-    ) @Valid @RequestBody SigninRequestDTO request) {
+    public ResponseEntity<SigninResponseDTO> signinStudent(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "The student to sign in", content = @Content(schema = @Schema(implementation = SigninRequestDTO.class), examples = @ExampleObject(value = "{ \"email\": \"john.doe@example.com\", \"password\": \"admin\" }"))) @Valid @RequestBody SigninRequestDTO request) {
         try {
 
             boolean result = studentService.login(request.getEmail(), request.getPassword());
 
             if (result) {
-                return ResponseEntity.ok().body(jwtUtils.generateToken(request.getEmail(), "STUDENT"));
+                return ResponseEntity
+                        .ok()
+                        .body(new SigninResponseDTO(
+                                jwtUtils.generateToken(
+                                        request.getEmail(),
+                                        "STUDENT")));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -119,15 +110,7 @@ public class AuthController {
     })
     @PostMapping("/signup/teacher")
     public ResponseEntity<Void> signupTeacher(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                description = "The teacher to sign up", 
-                content = @Content(
-                    schema = @Schema(implementation = SignupRequestDTO.class),
-                    examples = @ExampleObject(
-                        value = "{ \"firstName\": \"John\", \"lastName\": \"Doe\", \"phoneNumber\": \"1234567890\", \"email\": \"john.doe@email.com\", \"password\": \"password123\" }"
-                    )
-                )
-            ) @Valid @RequestBody SignupRequestDTO request) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "The teacher to sign up", content = @Content(schema = @Schema(implementation = SignupRequestDTO.class), examples = @ExampleObject(value = "{ \"firstName\": \"John\", \"lastName\": \"Doe\", \"phoneNumber\": \"1234567890\", \"email\": \"john.doe@email.com\", \"password\": \"password123\" }"))) @Valid @RequestBody SignupRequestDTO request) {
         try {
 
             teacherService.registerTeacher(request);
@@ -154,21 +137,18 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Internal server error while signing in teacher")
     })
     @PostMapping("/signin/teacher")
-    public ResponseEntity<String> signinTeacher(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-        description = "The teacher to sign in", 
-        content = @Content(
-            schema = @Schema(implementation = SigninRequestDTO.class),
-            examples = @ExampleObject(
-                value = "{ \"email\": \"teach1@email.com\", \"password\": \"admin\" }"
-            )
-        )
-    ) @Valid @RequestBody SigninRequestDTO request) {
+    public ResponseEntity<SigninResponseDTO> signinTeacher(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "The teacher to sign in", content = @Content(schema = @Schema(implementation = SigninRequestDTO.class), examples = @ExampleObject(value = "{ \"email\": \"teach1@email.com\", \"password\": \"admin\" }"))) @Valid @RequestBody SigninRequestDTO request) {
         try {
 
             boolean result = teacherService.login(request.getEmail(), request.getPassword());
 
             if (result) {
-                return ResponseEntity.ok().body(jwtUtils.generateToken(request.getEmail(), "TEACHER"));
+                return ResponseEntity.ok().body(
+                        new SigninResponseDTO(
+                                jwtUtils.generateToken(
+                                        request.getEmail(),
+                                        "TEACHER")));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }

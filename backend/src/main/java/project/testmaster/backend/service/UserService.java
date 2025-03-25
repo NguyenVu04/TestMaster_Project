@@ -38,6 +38,10 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+
     public UUID login(String email, String password) {
         Account account = accountService.getAccountByEmail(email);
 
