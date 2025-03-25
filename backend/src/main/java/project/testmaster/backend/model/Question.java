@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,14 +24,15 @@ public class Question {
         MULTIPLE_CHOICE,
         SHORT_ANSWER
     }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "type", columnDefinition = "question_type")
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private QuestionType type;
 
     @Column(name = "content")

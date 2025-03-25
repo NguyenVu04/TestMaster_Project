@@ -21,7 +21,7 @@ import project.testmaster.backend.dto.ExamInfoDTO;
 import project.testmaster.backend.service.ExamService;
 
 @RestController
-@RequestMapping("/api/exam")
+@RequestMapping(path = "/api/exam")
 public class ExamController {
     private final Logger logger = LoggerFactory.getLogger(ExamController.class);
 

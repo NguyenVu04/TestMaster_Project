@@ -21,6 +21,9 @@ public class ExamQuestion {
     @JoinColumn(name = "question_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Question question;
 
+    @Column(name = "number", nullable = false)
+    private int number;
+
     @Column(name = "score", nullable = false)
     private float score;
 
@@ -30,15 +33,21 @@ public class ExamQuestion {
     public ExamQuestion() {
     }
 
-    public ExamQuestion(Exam exam, Question question, float score, boolean autoScore) {
+    public ExamQuestion(Exam exam, Question question, float score, boolean autoScore, int number) {
+        this.id = new ExamQuestionId(exam.getId(), question.getId());
         this.exam = exam;
         this.question = question;
         this.score = score;
         this.autoScore = autoScore;
+        this.number = number;
     }
 
     public ExamQuestionId getId() {
         return id;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public Question getQuestion() {

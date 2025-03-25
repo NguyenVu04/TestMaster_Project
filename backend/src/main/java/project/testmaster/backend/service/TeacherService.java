@@ -35,9 +35,9 @@ public class TeacherService {
         return teacherRepository.findById(id).orElse(null);
     }
 
-    public boolean login(String email, String password) {
+    public UUID login(String email, String password) {
         UUID id = userService.login(email, password);
 
-        return id != null && teacherRepository.existsById(id);
+        return id;
     }
 }

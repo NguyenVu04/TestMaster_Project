@@ -3,8 +3,9 @@ package project.testmaster.backend.model;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -58,7 +59,7 @@ public class Exam {
     private List<ExamSession> examResult;
 
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<ExamQuestion> examQuestions;
+    private List<ExamQuestion> examQuestions;
 
     /**
      * Default constructor.
@@ -267,5 +268,42 @@ public class Exam {
      */
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
+    }
+    
+    /**
+     * Returns the list of questions associated with the exam.
+     *
+     * @return the list of questions
+     */
+    @Transactional
+    public List<ExamQuestion> getExamQuestions() {
+        return Collections.unmodifiableList(this.examQuestions);
+    }
+
+    /**
+     * Adds an existing quesion to the exam.
+     * @param examQuestion the question to add
+     */
+    @Transactional
+    public void addExamQuestion(ExamQuestion examQuestion) {
+        this.examQuestions.add(examQuestion);
+    }
+
+    /**
+     * Removes a question from the exam.
+     * @param examQuestion the question to remove
+     */
+    @Transactional
+    public void removeExamQuestion(ExamQuestion examQuestion) {
+        this.examQuestions.remove(examQuestion);
+    }
+
+    /**
+     * Sets the list of questions associated with the exam.
+     * @param examQuestions the list of questions
+     */
+    @Transactional
+    public void setExamQuestions(List<ExamQuestion> examQuestions) {
+        this.examQuestions = examQuestions;
     }
 }

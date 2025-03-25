@@ -61,6 +61,7 @@ CREATE TABLE "notification" (
 CREATE TABLE "exam_question" (
     "exam_id" UUID NOT NULL,
     "question_id" UUID NOT NULL,
+    "number" INT NOT NULL,
     "score" REAL NOT NULL,
     "auto_score" BOOLEAN NOT NULL,
     PRIMARY KEY ("exam_id", "question_id")

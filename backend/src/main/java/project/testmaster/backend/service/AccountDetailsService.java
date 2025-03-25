@@ -1,5 +1,7 @@
 package project.testmaster.backend.service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,8 +16,8 @@ public class AccountDetailsService implements UserDetailsService {
     private AccountRepository accountRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return accountRepository.findByEmail(email)
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        return accountRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

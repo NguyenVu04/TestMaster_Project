@@ -41,11 +41,13 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(req -> req
-                        // .requestMatchers("api/teacher/**").hasRole("TEACHER")
-                        // .requestMatchers("api/student/**").hasRole("STUDENT")
-                        // .requestMatchers("api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("api/auth/**").permitAll()
-                        .requestMatchers("api/**").permitAll()
+                        .requestMatchers("/api/teacher/**").hasRole("TEACHER")
+                        .requestMatchers("/api/student/**").hasRole("STUDENT")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/exam/**").authenticated()
+                        .requestMatchers("/api/user/**").authenticated()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().permitAll())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
