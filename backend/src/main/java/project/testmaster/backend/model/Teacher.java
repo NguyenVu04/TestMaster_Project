@@ -26,6 +26,10 @@ public class Teacher {
     public Teacher() {
     }
 
+    public Teacher(UUID userId) {
+        this.userId = userId;
+    }
+
     public Teacher(User user) {
         this.user = user;
     }

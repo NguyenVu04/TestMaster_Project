@@ -8,6 +8,7 @@ import project.testmaster.backend.model.Exam;
  * Data Transfer Object for Exam information.
  */
 public class ExamInfoDTO {
+    private String id;
     private String title;
     private String description;
     private Short attemptLimit;
@@ -27,6 +28,7 @@ public class ExamInfoDTO {
     /**
      * Constructs a new ExamInfoDTO with the specified details.
      *
+     * @param id               the ID of the exam
      * @param title            the title of the exam
      * @param description      the description of the exam
      * @param attemptLimit     the attempt limit for the exam
@@ -38,6 +40,7 @@ public class ExamInfoDTO {
      * @param teacherId        the ID of the teacher
      */
     public ExamInfoDTO(
+            String id,
             String title,
             String description,
             short attemptLimit,
@@ -66,6 +69,7 @@ public class ExamInfoDTO {
      */
     public static ExamInfoDTO fromEntity(Exam exam) {
         return new ExamInfoDTO(
+                exam.getId().toString(),
                 exam.getTitle(),
                 exam.getDescription(),
                 exam.getAttemptLimit(),
@@ -75,6 +79,15 @@ public class ExamInfoDTO {
                 exam.getTeacher().getUser().getFirstName(),
                 exam.getTeacher().getUser().getLastName(),
                 exam.getTeacher().getUserId());
+    }
+
+    /**
+     * Returns the ID of the exam.
+     *
+     * @return the ID of the exam
+     */
+    public String getId() {
+        return id;
     }
 
     /**
