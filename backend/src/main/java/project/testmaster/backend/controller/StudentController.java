@@ -189,6 +189,10 @@ public class StudentController {
             @Valid @RequestBody ExamSubmitRequestDTO request) {
         try {
 
+            SecurityContext context = SecurityContextHolder.getContext();
+            Account account = (Account) context.getAuthentication().getPrincipal();
+            UUID studentId = account.getUserId();
+
             Map<UUID, String> answers = new HashMap<>();
 
             for (StudentAnswerDTO answer : request.getAnswers()) {
@@ -198,7 +202,7 @@ public class StudentController {
             examService.submitExamSession(
                     request.getAttemptId(),
                     UUID.fromString(request.getExamId()),
-                    UUID.fromString(request.getStudentId()),
+                    UUID.fromString(studentId.toString()),
                     answers);
 
             return ResponseEntity.ok().build();
@@ -235,6 +239,10 @@ public class StudentController {
             @Valid @RequestBody ExamSubmitRequestDTO request) {
         try {
 
+            SecurityContext context = SecurityContextHolder.getContext();
+            Account account = (Account) context.getAuthentication().getPrincipal();
+            UUID studentId = account.getUserId();
+
             Map<UUID, String> answers = new HashMap<>();
 
             for (StudentAnswerDTO answer : request.getAnswers()) {
@@ -244,7 +252,7 @@ public class StudentController {
             examService.saveExamSession(
                     request.getAttemptId(),
                     UUID.fromString(request.getExamId()),
-                    UUID.fromString(request.getStudentId()),
+                    UUID.fromString(studentId.toString()),
                     answers);
 
             return ResponseEntity.ok().build();
