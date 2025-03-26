@@ -95,7 +95,7 @@ public class StudentController {
                             question.getQuestion().getOptions().toArray(new String[0]),
                             question.getQuestion().getType(),
                             question.getQuestion().getMediaUrl().toArray(new String[0]),
-                            answerMap.containsKey(question.getQuestion().getId()) ? null
+                            !answerMap.containsKey(question.getQuestion().getId()) ? null
                                     : answerMap.get(question.getQuestion().getId()).getAnswer(),
                             question.getScore()))
                     .toList();

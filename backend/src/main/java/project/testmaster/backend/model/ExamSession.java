@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -48,7 +49,7 @@ public class ExamSession {
     @JoinColumn(name = "student_id", referencedColumnName = "user_id", insertable = false, updatable = false, nullable = false)
     private Student student;
 
-    @OneToMany(mappedBy = "examSession", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "examSession", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<StudentAnswer> studentAnswers;
 
     /**
