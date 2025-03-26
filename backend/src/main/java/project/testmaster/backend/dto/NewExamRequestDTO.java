@@ -4,7 +4,7 @@ public class NewExamRequestDTO {
     private String title;
     private String description;
     private Short attemptLimit;
-    private String passCode;
+    private String passcode;
     private Long startTime;
     private Long endTime;
     private Integer timeLimit;
@@ -14,11 +14,11 @@ public class NewExamRequestDTO {
     public NewExamRequestDTO() {
     }
 
-    public NewExamRequestDTO(String title, String description, Short attemptLimit, String passCode, Long startTime, Long endTime, Integer timeLimit, SelectedQuestionRequestDTO[] selectedQuestions, NewQuestionRequestDTO[] newQuestions) {
+    public NewExamRequestDTO(String title, String description, Short attemptLimit, String passcode, Long startTime, Long endTime, Integer timeLimit, SelectedQuestionRequestDTO[] selectedQuestions, NewQuestionRequestDTO[] newQuestions) {
         this.title = title;
         this.description = description;
         this.attemptLimit = attemptLimit;
-        this.passCode = passCode;
+        this.passcode = passcode;
         this.startTime = startTime;
         this.endTime = endTime;
         this.timeLimit = timeLimit;
@@ -51,7 +51,7 @@ public class NewExamRequestDTO {
     }
 
     public String getPasscode() {
-        return passCode;
+        return passcode;
     }
 
     public SelectedQuestionRequestDTO[] getSelectedQuestions() {

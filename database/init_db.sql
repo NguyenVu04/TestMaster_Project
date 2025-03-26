@@ -75,6 +75,7 @@ CREATE TABLE "exam_student" (
     "feedback" TEXT,
     "start_time" TIMESTAMP NOT NULL,
     "end_time" TIMESTAMP NOT NULL,
+    "submitted" BOOLEAN NOT NULL,
     PRIMARY KEY ("attempt_id", "exam_id", "student_id")
 );
 

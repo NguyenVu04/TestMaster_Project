@@ -56,7 +56,7 @@ public class Exam {
     private int timeLimit;
 
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ExamSession> examResult;
+    private List<ExamSession> examSession;
 
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ExamQuestion> examQuestions;
@@ -203,8 +203,27 @@ public class Exam {
      *
      * @return the list of exam results
      */
-    public List<ExamSession> getExamResult() {
-        return Collections.unmodifiableList(this.examResult);
+    @Transactional
+    public List<ExamSession> getExamSession() {
+        return Collections.unmodifiableList(this.examSession);
+    }
+
+    /**
+     * Adds an exam session to the exam.
+     * @param examSssion the exam result to add
+     */
+    @Transactional
+    public void addExamSession(ExamSession examSession) {
+        this.examSession.add(examSession);
+    }
+
+    /**
+     * Removes an exam session from the exam.
+     * @param examSession the exam result to remove
+     */
+    @Transactional
+    public void removeExamSession(ExamSession examSession) {
+        this.examSession.remove(examSession);
     }
 
     /**
