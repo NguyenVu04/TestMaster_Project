@@ -42,7 +42,7 @@ public class Student {
     }
 
     public UUID getUserId() {
-        return user.getId();
+        return this.userId;
     }
 
     public User getUser() {

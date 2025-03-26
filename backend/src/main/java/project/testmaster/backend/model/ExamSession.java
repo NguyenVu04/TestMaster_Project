@@ -67,12 +67,13 @@ public class ExamSession {
      * @param endTime   the end time of the exam
      */
     public ExamSession(
+            short attemptId,
             Exam exam,
             Student student,
             String feedback,
             Timestamp startTime,
             Timestamp endTime) {
-        this.id = new ExamSessionId(exam.getId(), student.getUserId());
+        this.id = new ExamSessionId(attemptId, student.getUserId(), exam.getId());
         this.exam = exam;
         this.student = student;
         this.feedback = feedback;
@@ -153,7 +154,13 @@ public class ExamSession {
         return submitted;
     }
 
-    public void setSubmitted() {
+    /**
+     * Sets the total score obtained by the student.
+     *
+     * @param totalScore the total score obtained by the student
+     */
+    public void setSubmitted(float totalScore) {
+        this.totalScore = totalScore;
         this.endTime = Timestamp.from(Instant.now());
         this.submitted = true;
     }
@@ -166,5 +173,25 @@ public class ExamSession {
     @Transactional
     public List<StudentAnswer> getStudentAnswers() {
         return Collections.unmodifiableList(studentAnswers);
+    }
+
+    /**
+     * Adds a student answer to this exam result.
+     *
+     * @param studentAnswer the student answer to add
+     */
+    @Transactional
+    public void addStudentAnswer(StudentAnswer studentAnswer) {
+        studentAnswers.add(studentAnswer);
+    }
+
+    /**
+     * Sets the list of student answers associated with this exam result.
+     *
+     * @param studentAnswers the list of student answers
+     */
+    @Transactional
+    public void setStudentAnswers(List<StudentAnswer> studentAnswers) {
+        this.studentAnswers = studentAnswers;
     }
 }

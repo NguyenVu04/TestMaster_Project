@@ -19,9 +19,9 @@ public class StudentAnswer {
 
     @ManyToOne
     @JoinColumns({
-        @JoinColumn(name = "attempt_id", referencedColumnName = "attempt_id", insertable = false, updatable = false),
-        @JoinColumn(name = "student_id", referencedColumnName = "student_id", insertable = false, updatable = false),
-        @JoinColumn(name = "exam_id", referencedColumnName = "exam_id", insertable = false, updatable = false)
+            @JoinColumn(name = "attempt_id", referencedColumnName = "attempt_id", insertable = false, updatable = false),
+            @JoinColumn(name = "student_id", referencedColumnName = "student_id", insertable = false, updatable = false),
+            @JoinColumn(name = "exam_id", referencedColumnName = "exam_id", insertable = false, updatable = false)
     })
     private ExamSession examSession;
 
@@ -33,6 +33,11 @@ public class StudentAnswer {
     }
 
     public StudentAnswer(ExamSession examSession, Question question, String answer) {
+        this.id = new StudentAnswerId(
+                examSession.getId().getAttemptId(),
+                examSession.getId().getStudentId(),
+                question.getId(),
+                examSession.getId().getExamId());
         this.examSession = examSession;
         this.question = question;
         this.answer = answer;

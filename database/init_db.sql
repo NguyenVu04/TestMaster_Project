@@ -68,7 +68,7 @@ CREATE TABLE "exam_question" (
 );
 
 CREATE TABLE "exam_student" (
-    "attempt_id" SMALLSERIAL NOT NULL,
+    "attempt_id" SMALLSERIAL,
     "exam_id" UUID NOT NULL,
     "student_id" UUID NOT NULL,
     "total_score" REAL,

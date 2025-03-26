@@ -1,5 +1,6 @@
 package project.testmaster.backend.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -16,20 +17,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import project.testmaster.backend.dto.ExamSubmitRequestDTO;
 import project.testmaster.backend.dto.SessionQuestionDTO;
 import project.testmaster.backend.dto.SessionRequestDTO;
 import project.testmaster.backend.dto.SessionResponseDTO;
 import project.testmaster.backend.dto.StartExamRequestDTO;
 import project.testmaster.backend.dto.StartExamResponseDTO;
+import project.testmaster.backend.dto.StudentAnswerDTO;
 import project.testmaster.backend.model.Account;
 import project.testmaster.backend.model.Exam;
 import project.testmaster.backend.model.ExamQuestion;
 import project.testmaster.backend.model.ExamSession;
+import project.testmaster.backend.model.ExamSessionId;
 import project.testmaster.backend.model.StudentAnswer;
 import project.testmaster.backend.service.ExamService;
 
@@ -44,8 +52,16 @@ public class StudentController {
     @Autowired
     private ExamService examService;
 
-    @PostMapping(path = "exam")
-    public ResponseEntity<SessionResponseDTO> getExam(@Valid @RequestBody SessionRequestDTO request) {
+    @Operation(summary = "Get exam", description = "Get exam questions and answers", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Exam questions and answers"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Exam not found"),
+            @ApiResponse(responseCode = "500", description = "Failed to get exam")
+    })
+    @PostMapping(path = "exam/session")
+    public ResponseEntity<SessionResponseDTO> getExam(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Exam request", required = true) @Valid @RequestBody SessionRequestDTO request) {
         try {
 
             SecurityContext context = SecurityContextHolder.getContext();
@@ -77,12 +93,11 @@ public class StudentController {
                             question.getQuestion().getId().toString(),
                             question.getQuestion().getContent(),
                             question.getQuestion().getOptions().toArray(new String[0]),
-                            question.getQuestion().getAnswer(),
                             question.getQuestion().getType(),
                             question.getQuestion().getMediaUrl().toArray(new String[0]),
-                            answerMap.get(question.getQuestion().getId()).getAnswer(),
-                            question.getScore()
-                    ))
+                            answerMap.containsKey(question.getQuestion().getId()) ? null
+                                    : answerMap.get(question.getQuestion().getId()).getAnswer(),
+                            question.getScore()))
                     .toList();
 
             SessionResponseDTO response = new SessionResponseDTO(
@@ -94,11 +109,12 @@ public class StudentController {
                             .getEndTime()
                             .getTime(),
                     exam
-                            .getTimeLimit());
+                            .getTimeLimit(),
+                    session.isSubmitted());
 
             return ResponseEntity.ok(response);
 
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | NullPointerException e) {
 
             logger.error("Exam not found", e);
             return ResponseEntity.notFound().build();
@@ -111,20 +127,33 @@ public class StudentController {
         }
     }
 
+    @Operation(summary = "Start exam", description = "Start exam session", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Exam session started"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Exam not found"),
+            @ApiResponse(responseCode = "500", description = "Failed to start exam")
+    })
     @PostMapping(path = "exam/start")
-    public ResponseEntity<StartExamResponseDTO> startExam(@Valid @RequestBody StartExamRequestDTO request) {
+    public ResponseEntity<StartExamResponseDTO> startExam(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Start exam request", required = true) 
+            @Valid @RequestBody StartExamRequestDTO request) {
         try {
 
             SecurityContext context = SecurityContextHolder.getContext();
             Account account = (Account) context.getAuthentication().getPrincipal();
             UUID studentId = account.getUserId();
 
+            ExamSessionId sessionId = examService.startExamSession(
+                    UUID.fromString(
+                            request.getExamId()),
+                    studentId,
+                    request.getPasscode());
             StartExamResponseDTO response = new StartExamResponseDTO(
-                    examService.startExamSession(
-                            UUID.fromString(
-                                    request.getExamId()),
-                            studentId,
-                            request.getPasscode()));
+                    sessionId.getAttemptId(),
+                    sessionId.getExamId().toString(),
+                    sessionId.getStudentId().toString());
 
             return ResponseEntity.ok(response);
 
@@ -135,12 +164,104 @@ public class StudentController {
 
         } catch (IllegalArgumentException e) {
 
-            logger.error("Passcode is not correct", e);
+            logger.error("Unauthorized access", e);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         } catch (Exception e) {
 
             logger.error("Failed to start exam", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @Operation(summary = "Submit exam", description = "Submit exam session", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Exam session submitted"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Exam not found"),
+            @ApiResponse(responseCode = "500", description = "Failed to submit exam")
+    })
+    @PostMapping(path = "exam/submit")
+    public ResponseEntity<Void> submitExam(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Submit exam request", required = true) 
+            @Valid @RequestBody ExamSubmitRequestDTO request) {
+        try {
+
+            Map<UUID, String> answers = new HashMap<>();
+
+            for (StudentAnswerDTO answer : request.getAnswers()) {
+                answers.put(UUID.fromString(answer.getQuestionId()), answer.getAnswer());
+            }
+
+            examService.submitExamSession(
+                    request.getAttemptId(),
+                    UUID.fromString(request.getExamId()),
+                    UUID.fromString(request.getStudentId()),
+                    answers);
+
+            return ResponseEntity.ok().build();
+
+        } catch (IllegalArgumentException e) {
+
+            logger.error("Unauthorized access", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        } catch (EntityNotFoundException | NullPointerException e) {
+
+            logger.error("Exam not found", e);
+            return ResponseEntity.notFound().build();
+
+        } catch (Exception e) {
+
+            logger.error("Failed to submit exam", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @Operation(summary = "Save exam", description = "Save exam session", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Exam session saved"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Exam not found"),
+            @ApiResponse(responseCode = "500", description = "Failed to save exam")
+    })
+    @PostMapping(path = "exam/save")
+    public ResponseEntity<Void> saveSession(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Submit exam request", required = true) 
+            @Valid @RequestBody ExamSubmitRequestDTO request) {
+        try {
+
+            Map<UUID, String> answers = new HashMap<>();
+
+            for (StudentAnswerDTO answer : request.getAnswers()) {
+                answers.put(UUID.fromString(answer.getQuestionId()), answer.getAnswer());
+            }
+
+            examService.saveExamSession(
+                    request.getAttemptId(),
+                    UUID.fromString(request.getExamId()),
+                    UUID.fromString(request.getStudentId()),
+                    answers);
+
+            return ResponseEntity.ok().build();
+
+        } catch (IllegalArgumentException e) {
+
+            logger.error("Unauthorized access", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        } catch (EntityNotFoundException | NullPointerException e) {
+
+            logger.error("Exam not found", e);
+            return ResponseEntity.notFound().build();
+
+        } catch (Exception e) {
+
+            logger.error("Failed to save exam", e);
             return ResponseEntity.internalServerError().build();
 
         }

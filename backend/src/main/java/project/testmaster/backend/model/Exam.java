@@ -204,7 +204,7 @@ public class Exam {
      * @return the list of exam results
      */
     @Transactional
-    public List<ExamSession> getExamSession() {
+    public List<ExamSession> getExamSessions() {
         return Collections.unmodifiableList(this.examSession);
     }
 

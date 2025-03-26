@@ -5,15 +5,17 @@ public class SessionResponseDTO {
     private long startTime;
     private long endTime;
     private int timeLimit;
+    private boolean submitted;
 
     public SessionResponseDTO() {
     }
 
-    public SessionResponseDTO(SessionQuestionDTO[] questions, long startTime, long endTime, int timeLimit) {
+    public SessionResponseDTO(SessionQuestionDTO[] questions, long startTime, long endTime, int timeLimit, boolean submitted) {
         this.questions = questions;
         this.startTime = startTime;
         this.endTime = endTime;
         this.timeLimit = timeLimit;
+        this.submitted = submitted;
     }
 
     public SessionQuestionDTO[] getQuestions() {
@@ -30,5 +32,9 @@ public class SessionResponseDTO {
 
     public int getTimeLimit() {
         return timeLimit;
+    }
+
+    public boolean isSubmitted() {
+        return submitted;
     }
 }
