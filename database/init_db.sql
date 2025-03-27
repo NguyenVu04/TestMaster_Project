@@ -30,7 +30,7 @@ CREATE TABLE "exam" (
     "teacher_id" UUID,
     "title" VARCHAR(50) NOT NULL,
     "description" VARCHAR(255),
-    "attempt_limit" INT,
+    "attempt_limit" SMALLINT,
     "passcode" VARCHAR(15),
     "start_time" TIMESTAMP NOT NULL,
     "end_time" TIMESTAMP NOT NULL,
@@ -54,34 +54,47 @@ CREATE TABLE "notification" (
     "receiver_id" UUID NOT NULL,
     "title" VARCHAR(50) NOT NULL,
     "content" TEXT NOT NULL,
-    "created_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "seen" BOOLEAN NOT NULL
 );
 
 CREATE TABLE "exam_question" (
     "exam_id" UUID NOT NULL,
     "question_id" UUID NOT NULL,
+    "number" INT NOT NULL,
+    "score" REAL NOT NULL,
+    "auto_score" BOOLEAN NOT NULL,
     PRIMARY KEY ("exam_id", "question_id")
 );
 
 CREATE TABLE "exam_student" (
-    "attemp_id" SMALLSERIAL NOT NULL,
+    "attempt_id" SMALLSERIAL,
     "exam_id" UUID NOT NULL,
     "student_id" UUID NOT NULL,
-    "score" REAL,
+    "total_score" REAL,
     "feedback" TEXT,
     "start_time" TIMESTAMP NOT NULL,
     "end_time" TIMESTAMP NOT NULL,
-    PRIMARY KEY ("attemp_id", "exam_id", "student_id")
+    "submitted" BOOLEAN NOT NULL,
+    PRIMARY KEY ("attempt_id", "exam_id", "student_id")
 );
 
 CREATE TABLE "exam_student_answer" (
-    "attemp_id" SMALLSERIAL NOT NULL,
+    "attempt_id" SMALLSERIAL NOT NULL,
     "exam_id" UUID NOT NULL,
     "student_id" UUID NOT NULL,
     "question_id" UUID NOT NULL,
     "answer" TEXT,
-    PRIMARY KEY ("attemp_id", "exam_id", "student_id", "question_id")
+    "score" REAL,
+    PRIMARY KEY ("attempt_id", "exam_id", "student_id", "question_id")
+);
+
+CREATE TABLE "otp" (
+    "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    "user_id" UUID NOT NULL,
+    "otp" VARCHAR(6) NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "expired_at" TIMESTAMP NOT NULL
 );
 
 ALTER TABLE "account" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
@@ -103,3 +116,4 @@ ALTER TABLE "exam_student_answer"
     ADD FOREIGN KEY ("exam_id") REFERENCES "exam" ("id") ON DELETE CASCADE,
     ADD FOREIGN KEY ("student_id") REFERENCES "student" ("user_id") ON DELETE CASCADE,
     ADD FOREIGN KEY ("question_id") REFERENCES "question" ("id") ON DELETE CASCADE;
+ALTER TABLE "otp" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
