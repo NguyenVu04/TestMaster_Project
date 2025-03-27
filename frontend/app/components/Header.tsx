@@ -5,7 +5,7 @@ import Link from "next/link";
 function Header() {
   return (
     <div
-      className="bg-white sticky top-0 w-full z-50 shadow-md"
+      className="bg-white sticky top-0 w-full z-50 shadow-md mb-6"
       // style={{ backgroundColor: "#1A202C" }}
     >
       <nav className="container mx-auto flex justify-between items-center py-4 ">

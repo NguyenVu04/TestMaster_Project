@@ -8,7 +8,7 @@ import Logo from "@/public/Logo.png";
 
 function footer() {
   return (
-    <div className="bg-white fixed bottom-0 w-full">
+    <div className="bg-white mt-6 bottom-0 w-full ">
       <footer className="container mx-auto flex justify-between items-center py-4">
         <div className="flex-1">
           <Image src={Logo} alt="Logo" width={100} height={100} />
