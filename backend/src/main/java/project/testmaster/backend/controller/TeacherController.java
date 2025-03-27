@@ -79,10 +79,10 @@ public class TeacherController {
             UUID teacherId = account.getUserId();
 
             Timestamp startTime = newExam.getStartTime() != null
-                    ? Timestamp.from(Instant.ofEpochSecond(newExam.getStartTime()))
+                    ? Timestamp.from(Instant.ofEpochMilli(newExam.getStartTime()))
                     : null;
             Timestamp endTime = newExam.getEndTime() != null
-                    ? Timestamp.from(Instant.ofEpochSecond(newExam.getEndTime()))
+                    ? Timestamp.from(Instant.ofEpochMilli(newExam.getEndTime()))
                     : null;
 
             Exam exam = new Exam(

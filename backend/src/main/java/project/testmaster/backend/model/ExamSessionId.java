@@ -21,7 +21,8 @@ public class ExamSessionId {
     public ExamSessionId() {
     }
 
-    public ExamSessionId(UUID studentId, UUID examId) {
+    public ExamSessionId(short attemptId, UUID studentId, UUID examId) {
+        this.attemptId = attemptId;
         this.studentId = studentId;
         this.examId = examId;
     }

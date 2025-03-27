@@ -1,9 +1,13 @@
 package project.testmaster.backend.model;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -34,6 +38,9 @@ public class ExamSession {
     @Column(name = "end_time")
     private Timestamp endTime;
 
+    @Column(name = "submitted")
+    private boolean submitted;
+
     @ManyToOne
     @JoinColumn(name = "exam_id", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
     private Exam exam;
@@ -42,7 +49,7 @@ public class ExamSession {
     @JoinColumn(name = "student_id", referencedColumnName = "user_id", insertable = false, updatable = false, nullable = false)
     private Student student;
 
-    @OneToMany(mappedBy = "examResult", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "examSession", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<StudentAnswer> studentAnswers;
 
     /**
@@ -61,16 +68,19 @@ public class ExamSession {
      * @param endTime   the end time of the exam
      */
     public ExamSession(
+            short attemptId,
             Exam exam,
             Student student,
             String feedback,
             Timestamp startTime,
             Timestamp endTime) {
+        this.id = new ExamSessionId(attemptId, student.getUserId(), exam.getId());
         this.exam = exam;
         this.student = student;
         this.feedback = feedback;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.submitted = false;
     }
 
     /**
@@ -137,11 +147,52 @@ public class ExamSession {
     }
 
     /**
+     * Returns whether the student has submitted the exam.
+     *
+     * @return {@code true} if the student has submitted the exam, {@code false} otherwise
+     */
+    public boolean isSubmitted() {
+        return submitted;
+    }
+
+    /**
+     * Sets the total score obtained by the student.
+     *
+     * @param totalScore the total score obtained by the student
+     */
+    public void setSubmitted(float totalScore) {
+        this.totalScore = totalScore;
+        this.endTime = Timestamp.from(Instant.now());
+        this.submitted = true;
+    }
+
+    /**
      * Returns the list of student answers associated with this exam result.
      *
      * @return the list of student answers
      */
+    @Transactional
     public List<StudentAnswer> getStudentAnswers() {
         return Collections.unmodifiableList(studentAnswers);
+    }
+
+    /**
+     * Adds a student answer to this exam result.
+     *
+     * @param studentAnswer the student answer to add
+     */
+    @Transactional
+    public void addStudentAnswer(StudentAnswer studentAnswer) {
+        studentAnswers.add(studentAnswer);
+    }
+
+    /**
+     * Sets the list of student answers associated with this exam result.
+     *
+     * @param studentAnswers the list of student answers
+     */
+    @Transactional
+    public void setStudentAnswers(List<StudentAnswer> studentAnswers) {
+        this.studentAnswers = studentAnswers;
     }
 }
