@@ -1,8 +1,12 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
 import project.testmaster.backend.model.ExamQuestion;
 import project.testmaster.backend.model.Question.QuestionType;
 
+import java.util.List;
+
+@Getter
 public class TeacherQuestionViewDTO {
     private int number;
     private float score;
@@ -30,6 +34,8 @@ public class TeacherQuestionViewDTO {
     }
 
     public static TeacherQuestionViewDTO fromEntity(ExamQuestion examQuestion) {
+        List<String> options = examQuestion.getQuestion().getOptions();
+        List<String> mediaUrl = examQuestion.getQuestion().getMediaUrl();
         return new TeacherQuestionViewDTO(
             examQuestion.getNumber(),
             examQuestion.getScore(),
@@ -38,44 +44,9 @@ public class TeacherQuestionViewDTO {
             examQuestion.getQuestion().getId().toString(),
             examQuestion.getQuestion().getContent(),
             examQuestion.getQuestion().getAnswer(),
-            examQuestion.getQuestion().getOptions().toArray(new String[0]),
-            examQuestion.getQuestion().getMediaUrl().toArray(new String[0])
+            options != null ? options.toArray(new String[0]) : new String[0],
+            mediaUrl != null ? mediaUrl.toArray(new String[0]) : new String[0]
         );
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public float getScore() {
-        return score;
-    }
-
-    public boolean isAutoScore() {
-        return autoScore;
-    }
-
-    public QuestionType getType() {
-        return type;
-    }
-
-    public String getQuestionId() {
-        return questionId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public String[] getOptions() {
-        return options;
-    }
-
-    public String[] getMediaUrl() {
-        return mediaUrl;
-    }
 }

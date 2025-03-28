@@ -1,102 +1,50 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
 /**
  * Data Transfer Object for signup requests.
  */
+@Getter
 public class SignupRequestDTO {
+    /**
+     * -- GETTER --
+     *  Returns the email of the signup request.
+     *
+     */
     private String email;
+    /**
+     * -- GETTER --
+     *  Returns the password of the signup request.
+     *
+     */
     private String password;
+    /**
+     * -- GETTER --
+     *  Returns the first name of the signup request.
+     *
+     */
     private String firstName;
+    /**
+     * -- GETTER --
+     *  Returns the last name of the signup request.
+     *
+     */
     private String lastName;
+    /**
+     * -- GETTER --
+     *  Returns the phone number of the signup request.
+     *
+     */
     private String phoneNumber;
 
-    /**
-     * Returns the email of the signup request.
-     *
-     * @return the email of the signup request
-     */
-    public String getEmail() {
-        return email;
-    }
+    public SignupRequestDTO() {}
 
-    /**
-     * Sets the email of the signup request.
-     *
-     * @param email the new email of the signup request
-     */
-    public void setEmail(String email) {
+    public SignupRequestDTO(String email, String password, String firstName, String lastName, String phoneNumber) {
         this.email = email;
-    }
-
-    /**
-     * Returns the password of the signup request.
-     *
-     * @return the password of the signup request
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Sets the password of the signup request.
-     *
-     * @param password the new password of the signup request
-     */
-    public void setPassword(String password) {
         this.password = password;
-    }
-
-    /**
-     * Returns the first name of the signup request.
-     *
-     * @return the first name of the signup request
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Sets the first name of the signup request.
-     *
-     * @param firstName the new first name of the signup request
-     */
-    public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    /**
-     * Returns the last name of the signup request.
-     *
-     * @return the last name of the signup request
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * Sets the last name of the signup request.
-     *
-     * @param lastName the new last name of the signup request
-     */
-    public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    /**
-     * Returns the phone number of the signup request.
-     *
-     * @return the phone number of the signup request
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * Sets the phone number of the signup request.
-     *
-     * @param phoneNumber the new phone number of the signup request
-     */
-    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

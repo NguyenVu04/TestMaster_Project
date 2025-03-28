@@ -1,5 +1,8 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class SessionResponseDTO {
     private SessionQuestionDTO[] questions;
     private long startTime;
@@ -18,23 +21,4 @@ public class SessionResponseDTO {
         this.submitted = submitted;
     }
 
-    public SessionQuestionDTO[] getQuestions() {
-        return questions;
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public int getTimeLimit() {
-        return timeLimit;
-    }
-
-    public boolean isSubmitted() {
-        return submitted;
-    }
 }

@@ -7,21 +7,26 @@ import org.springframework.stereotype.Service;
 
 import project.testmaster.backend.model.Question;
 import project.testmaster.backend.model.Question.QuestionType;
+import project.testmaster.backend.model.Teacher;
 import project.testmaster.backend.repository.QuestionRepository;
 
 @Service
 public class QuestionService {
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
+
+    public QuestionService(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
 
     public Question createQuestion(
+            Teacher teacher,
             QuestionType type,
             String content,
             String[] mediaUrl,
             String[] options,
             String answer) {
         
-        Question question = new Question(type, content, mediaUrl, options, answer);
+        Question question = new Question(teacher, type, content, mediaUrl, options, answer);
         return questionRepository.save(question);
     }
 

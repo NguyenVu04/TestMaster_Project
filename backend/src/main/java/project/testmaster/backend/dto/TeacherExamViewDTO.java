@@ -1,7 +1,9 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
 import project.testmaster.backend.model.Exam;
 
+@Getter
 public class TeacherExamViewDTO {
     private String examId;
     private String title;
@@ -42,35 +44,4 @@ public class TeacherExamViewDTO {
                 exam.getTimeLimit());
     }
 
-    public String getExamId() {
-        return examId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getPasscode() {
-        return passcode;
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public TeacherQuestionViewDTO[] getQuestions() {
-        return questions;
-    }
-
-    public int getTimeLimit() {
-        return timeLimit;
-    }
 }

@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -25,11 +24,14 @@ import project.testmaster.backend.repository.ExamSessionRepository;
 
 @Service
 public class ExamService {
-    @Autowired
-    private ExamRepository examRepository;
+    private final ExamRepository examRepository;
 
-    @Autowired
-    private ExamSessionRepository examSessionRepository;
+    private final ExamSessionRepository examSessionRepository;
+
+    public ExamService(ExamRepository examRepository, ExamSessionRepository examSessionRepository) {
+        this.examRepository = examRepository;
+        this.examSessionRepository = examSessionRepository;
+    }
 
     public Exam getExamById(UUID id) {
         return examRepository.findById(id).orElse(null);
@@ -95,9 +97,7 @@ public class ExamService {
                 Timestamp.from(now),
                 Timestamp.from(endTime));
 
-        ExamSessionId sessionId = examSessionRepository.save(examSession).getId();
-
-        return sessionId;
+        return examSessionRepository.save(examSession).getId();
     }
 
     public void deleteExamSession(UUID examId, UUID studentId, short attemptId) {
@@ -125,7 +125,7 @@ public class ExamService {
                     .collect(
                             Collectors.toMap(
                                     studentAnswer -> studentAnswer.getQuestion().getId(),
-                                    studentAnswer -> studentAnswer.getAnswer()));
+                                    StudentAnswer::getAnswer));
         }
 
         List<ExamQuestion> questions = session.getExam().getExamQuestions();
@@ -148,19 +148,23 @@ public class ExamService {
         }
 
         if (!session.getEndTime().before(Timestamp.from(Instant.now()))) {
-            List<StudentAnswer> studentAnswers = new ArrayList<>();
-            for (Map.Entry<UUID, String> entry : answers.entrySet()) {
-                studentAnswers.add(new StudentAnswer(
-                        session,
-                        new Question(entry.getKey()),
-                        entry.getValue()));
-            }
-            session.setStudentAnswers(studentAnswers);
+            updateStudentAnswers(answers, session);
         }
 
         session.setSubmitted(totalScore);
 
         examSessionRepository.save(session);
+    }
+
+    private void updateStudentAnswers(Map<UUID, String> answers, ExamSession session) {
+        List<StudentAnswer> studentAnswers = new ArrayList<>();
+        for (Map.Entry<UUID, String> entry : answers.entrySet()) {
+            studentAnswers.add(new StudentAnswer(
+                    session,
+                    new Question(entry.getKey()),
+                    entry.getValue()));
+        }
+        session.setStudentAnswers(studentAnswers);
     }
 
     public void saveExamSession(
@@ -180,14 +184,7 @@ public class ExamService {
             throw new IllegalArgumentException("Exam session has ended");            
         }
 
-        List<StudentAnswer> studentAnswers = new ArrayList<>();
-        for (Map.Entry<UUID, String> entry : answers.entrySet()) {
-            studentAnswers.add(new StudentAnswer(
-                    session,
-                    new Question(entry.getKey()),
-                    entry.getValue()));
-        }
-        session.setStudentAnswers(studentAnswers);
+        updateStudentAnswers(answers, session);
 
         examSessionRepository.save(session);
     }

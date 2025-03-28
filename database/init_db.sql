@@ -41,6 +41,7 @@ CREATE TYPE question_type AS ENUM ('MULTIPLE_CHOICE', 'SHORT_ANSWER');
 
 CREATE TABLE "question" (
     "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    "creator" UUID NOT NULL,
     "type" question_type NOT NULL,
     "content" TEXT NOT NULL,
     "media_url" TEXT[],
@@ -103,7 +104,8 @@ ALTER TABLE "teacher" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DE
 ALTER TABLE "admin" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
 ALTER TABLE "exam" 
     ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher" ("user_id") ON DELETE SET NULL;
-ALTER TABLE "notification" 
+ALTER TABLE "question" ADD FOREIGN KEY ("creator") REFERENCES  "teacher" ("user_id") ON DELETE CASCADE;
+ALTER TABLE "notification"
     ADD FOREIGN KEY ("sender_id") REFERENCES "user" ("id") ON DELETE CASCADE,
     ADD FOREIGN KEY ("receiver_id") REFERENCES "user" ("id") ON DELETE CASCADE;
 ALTER TABLE "exam_question"

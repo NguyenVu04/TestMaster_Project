@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public AdminService(UserService userService) {
+        this.userService = userService;
+    }
 
     public UUID login(String email, String password) {
-        UUID id = userService.login(email, password);
 
-        return id;
+        return userService.login(email, password);
     }
 }

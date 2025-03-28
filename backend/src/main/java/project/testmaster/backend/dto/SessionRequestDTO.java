@@ -1,5 +1,8 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class SessionRequestDTO {
     private short attemptId;
     private String examId;
@@ -12,11 +15,4 @@ public class SessionRequestDTO {
         this.examId = examId;
     }
 
-    public short getAttemptId() {
-        return attemptId;
-    }
-
-    public String getExamId() {
-        return examId;
-    }
 }

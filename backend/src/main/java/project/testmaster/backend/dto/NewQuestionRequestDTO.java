@@ -1,15 +1,28 @@
 package project.testmaster.backend.dto;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import project.testmaster.backend.model.Question.QuestionType;
 
+@Getter
 public class NewQuestionRequestDTO {
+    @NotNull
     private int number;
+    @NotNull
     private float score;
+    @NotNull
     private boolean autoScore;
+    @Setter
+    @NotNull
     private QuestionType type;
+    @NotNull
     private String content;
+    @NotNull
     private String[] mediaUrl;
+    @NotNull
     private String[] options;
+    @NotNull
     private String answer;
 
     public NewQuestionRequestDTO() {
@@ -23,49 +36,6 @@ public class NewQuestionRequestDTO {
         this.content = content;
         this.mediaUrl = mediaUrl;
         this.options = options;
-        this.answer = answer;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-    
-    public float getScore() {
-        return score;
-    }
-
-    public boolean isAutoScore() {
-        return autoScore;
-    }
-
-    public QuestionType getType() {
-        return type;
-    }
-    public void setType(QuestionType type) {
-        this.type = type;
-    }
-    public String getContent() {
-        return content;
-    }
-    public void setContent(String content) {
-        this.content = content;
-    }
-    public String[] getMediaUrl() {
-        return mediaUrl;
-    }
-    public void setMediaUrl(String[] mediaUrl) {
-        this.mediaUrl = mediaUrl;
-    }
-    public String[] getOptions() {
-        return options;
-    }
-    public void setOptions(String[] options) {
-        this.options = options;
-    }
-    public String getAnswer() {
-        return answer;
-    }
-    public void setAnswer(String answer) {
         this.answer = answer;
     }
 }

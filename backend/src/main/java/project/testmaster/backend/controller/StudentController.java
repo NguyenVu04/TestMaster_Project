@@ -40,6 +40,7 @@ import project.testmaster.backend.model.ExamSession;
 import project.testmaster.backend.model.ExamSessionId;
 import project.testmaster.backend.model.StudentAnswer;
 import project.testmaster.backend.service.ExamService;
+import project.testmaster.backend.utils.UserUtils;
 
 @RestController
 @RequestMapping(path = "/api/student")
@@ -48,6 +49,9 @@ import project.testmaster.backend.service.ExamService;
 })
 public class StudentController {
     private final Logger logger = LoggerFactory.getLogger(StudentController.class);
+
+    @Autowired
+    private UserUtils userUtils;
 
     @Autowired
     private ExamService examService;
@@ -63,10 +67,7 @@ public class StudentController {
     public ResponseEntity<SessionResponseDTO> getExam(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Exam request", required = true) @Valid @RequestBody SessionRequestDTO request) {
         try {
-
-            SecurityContext context = SecurityContextHolder.getContext();
-            Account account = (Account) context.getAuthentication().getPrincipal();
-            UUID studentId = account.getUserId();
+            UUID studentId = userUtils.getCurrentUserId();
 
             ExamSession session = examService
                     .getExamSession(
@@ -140,10 +141,7 @@ public class StudentController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Start exam request", required = true) 
             @Valid @RequestBody StartExamRequestDTO request) {
         try {
-
-            SecurityContext context = SecurityContextHolder.getContext();
-            Account account = (Account) context.getAuthentication().getPrincipal();
-            UUID studentId = account.getUserId();
+            UUID studentId = userUtils.getCurrentUserId();
 
             ExamSessionId sessionId = examService.startExamSession(
                     UUID.fromString(
@@ -189,9 +187,7 @@ public class StudentController {
             @Valid @RequestBody ExamSubmitRequestDTO request) {
         try {
 
-            SecurityContext context = SecurityContextHolder.getContext();
-            Account account = (Account) context.getAuthentication().getPrincipal();
-            UUID studentId = account.getUserId();
+            UUID studentId = userUtils.getCurrentUserId();
 
             Map<UUID, String> answers = new HashMap<>();
 
@@ -239,9 +235,7 @@ public class StudentController {
             @Valid @RequestBody ExamSubmitRequestDTO request) {
         try {
 
-            SecurityContext context = SecurityContextHolder.getContext();
-            Account account = (Account) context.getAuthentication().getPrincipal();
-            UUID studentId = account.getUserId();
+            UUID studentId = userUtils.getCurrentUserId();
 
             Map<UUID, String> answers = new HashMap<>();
 

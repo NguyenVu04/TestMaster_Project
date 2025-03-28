@@ -1,5 +1,8 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class SelectedQuestionRequestDTO {
     private String questionId;
     private float score;
@@ -16,19 +19,4 @@ public class SelectedQuestionRequestDTO {
         this.number = number;
     }
 
-    public String getQuestionId() {
-        return questionId;
-    }
-
-    public float getScore() {
-        return score;
-    }
-
-    public boolean isAutoScore() {
-        return autoScore;
-    }
-
-    public int getNumber() {
-        return number;
-    }
 }

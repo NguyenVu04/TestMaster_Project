@@ -1,16 +1,13 @@
 package project.testmaster.backend.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
+@Getter
 @Entity
 @Table(name = "teacher")
 public class Teacher {
@@ -23,6 +20,12 @@ public class Teacher {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
+    private List<Exam> exams;
+
+    @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
+    private List<Question> questions;
+
     public Teacher() {
     }
 
@@ -34,11 +37,13 @@ public class Teacher {
         this.user = user;
     }
 
-    public UUID getUserId() {
-        return user.getId();
+    @Transactional
+    public List<Exam> getExams() {
+        return exams;
     }
 
-    public User getUser() {
-        return user;
+    @Transactional
+    public List<Question> getQuestions() {
+        return questions;
     }
 }

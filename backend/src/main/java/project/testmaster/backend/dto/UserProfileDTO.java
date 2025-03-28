@@ -1,7 +1,9 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
 import project.testmaster.backend.model.User;
 
+@Getter
 public class UserProfileDTO {
     private String id;
     private String firstName;
@@ -30,23 +32,4 @@ public class UserProfileDTO {
         );
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 }

@@ -1,5 +1,8 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class StudentAnswerDTO {
     private String questionId;
     private String answer;
@@ -12,11 +15,4 @@ public class StudentAnswerDTO {
         this.answer = answer;
     }
 
-    public String getQuestionId() {
-        return questionId;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
 }
