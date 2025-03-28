@@ -210,7 +210,7 @@ public class Exam {
 
     /**
      * Adds an exam session to the exam.
-     * @param examSssion the exam result to add
+     * @param examSession the exam result to add
      */
     @Transactional
     public void addExamSession(ExamSession examSession) {

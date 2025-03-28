@@ -32,6 +32,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class handling student-related operations.
+ * This class provides REST endpoints for exam-related actions, such as starting,
+ * submitting, and saving exams, as well as retrieving exam results.
+ */
 @RestController
 @RequestMapping(path = "/api/student")
 @SecuritySchemes({
@@ -49,6 +54,14 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    /**
+     * Retrieves an exam session including questions, answers, start time, end time, and other details.
+     * This method processes the exam session requested by a student and returns the relevant data.
+     *
+     * @param request the session request containing details such as exam ID and attempt ID
+     * @return a ResponseEntity containing the session response, including the exam questions,
+     *         answers, start and end times, and submission status; or an error response in case of failure
+     */
     @Operation(summary = "Get exam", description = "Get exam questions and answers", security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Exam questions and answers"),
@@ -120,6 +133,14 @@ public class StudentController {
         }
     }
 
+    /**
+     * Starts an exam session for a student.
+     *
+     * @param request the request object containing details for starting the exam,
+     *                including the exam ID and passcode
+     * @return a ResponseEntity containing a StartExamResponseDTO if the exam session
+     *         is successfully started, or an appropriate error response for failure scenarios
+     */
     @Operation(summary = "Start exam", description = "Start exam session", security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Exam session started"),
@@ -165,6 +186,19 @@ public class StudentController {
         }
     }
 
+    /**
+     * Submits an exam session for a student. This method processes the student's answers
+     * and registers their submission for the specified exam.
+     *
+     * @param request the request payload containing the exam information, including the exam ID,
+     *                attempt ID, and the student's answers to the exam questions
+     * @return a ResponseEntity indicating the outcome of the submission. Possible responses are:
+     *         - HTTP 200: The exam session was successfully submitted.
+     *         - HTTP 401: Unauthorized access, indicating the user is not authenticated.
+     *         - HTTP 403: Forbidden, indicating the user does not have proper permissions.
+     *         - HTTP 404: The specified exam was not found.
+     *         - HTTP 500: An internal server error occurred while submitting the exam.
+     */
     @Operation(summary = "Submit exam", description = "Submit exam session", security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Exam session submitted"),
@@ -213,6 +247,17 @@ public class StudentController {
         }
     }
 
+    /**
+     * Saves an exam session provided by the user.
+     *
+     * @param request The request object containing exam details including attempt ID, exam ID,
+     *                student answers, and other required information.
+     * @return A ResponseEntity indicating the outcome of the save operation. Possible responses:
+     *         - 200 OK: Exam session saved successfully.
+     *         - 401 Unauthorized: User is not authorized to save the exam session.
+     *         - 404 Not Found: Exam or related resources could not be found.
+     *         - 500 Internal Server Error: An error occurred while saving the exam session.
+     */
     @Operation(summary = "Save exam", description = "Save exam session", security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Exam session saved"),
@@ -261,6 +306,14 @@ public class StudentController {
         }
     }
 
+    /**
+     * Retrieves a list of exam results for the currently authenticated student.
+     * The method fetches exam results, filters those that have been submitted,
+     * and converts them to ExamResultDTO objects.
+     *
+     * @return ResponseEntity containing a list of ExamResultDTO objects if successful,
+     *         or an appropriate HTTP status code if an error occurs.
+     */
     @Operation(summary = "Get results of all exams", description = "Get exam results", security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Exam results", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ExamResultDTO.class)))),
@@ -291,6 +344,14 @@ public class StudentController {
         }
     }
 
+    /**
+     * Retrieves the results of an exam for the current student user.
+     *
+     * @param examId the unique identifier of the exam to retrieve results for
+     * @return a ResponseEntity containing a list of ExamResultDTO objects representing
+     *         the exam results if the operation is successful, or an appropriate HTTP
+     *         status code if an error occurs
+     */
     @Operation(summary = "Get results of an exam", description = "Get exam result", security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Exam result", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ExamResultDTO.class)))),
