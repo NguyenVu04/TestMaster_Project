@@ -8,7 +8,6 @@ import { validateLoginData } from "@/lib/validation/auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-
 export default function SignIn() {
   const router = useRouter();
   const types = ["email", "password", "role"];
@@ -28,21 +27,32 @@ export default function SignIn() {
     });
     const er = errors;
 
-    if (er[id]){
+    if (er[id]) {
       er[id].message = "";
       setErrors(er);
-
     }
   }
 
-  const handleSignIn= async () => {
+  const handleSignIn = async () => {
     const { success, errors } = validateLoginData(infor);
     if (!success) {
       setErrors(errors);
       return;
     }
     console.log("Login success", infor);
-    
+
+    if (infor.role === "student") {
+      const res = await fetch("localhost:8080/api/auth/login");
+
+      if (!res.ok) {
+        console.error("Login failed:", res.statusText);
+      } else {
+        console.log("Login successful with student", res);
+      }
+    } else if (infor.role === "teacher") {
+      const res = await fetch("");
+    }
+
     // Use signIn from next-auth/react
     const result = await signIn("credentials", {
       redirect: false,
@@ -59,7 +69,7 @@ export default function SignIn() {
       router.push("/auth/my-account");
     }
     reset();
-  }
+  };
 
   const reset = () => {
     setInfor({

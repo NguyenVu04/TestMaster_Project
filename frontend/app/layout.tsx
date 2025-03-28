@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import BackgroundScreen from "@/app/components/BackgroundScreen";
+import { store } from "@/app/store";
+import { ReduxProvider } from "@/app/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,9 +25,11 @@ export default function RootLayout({
         className="min-h-screen flex flex-col"
         style={{ backgroundColor: "#fff" }}
       >
-        <Header />
-        <BackgroundScreen>{children}</BackgroundScreen>
-        <Footer />
+        <ReduxProvider>
+          <Header />
+          <BackgroundScreen>{children}</BackgroundScreen>
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );
