@@ -1,5 +1,8 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class SigninResponseDTO {
     private String accessToken;
 
@@ -10,7 +13,4 @@ public class SigninResponseDTO {
         this.accessToken = accessToken;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
 }

@@ -47,12 +47,12 @@ INSERT INTO "exam" ("id", "teacher_id", "title", "description", "attempt_limit",
 ('55555555-5555-5555-5555-555555555555', '55555555-5555-5555-5555-555555555555', 'English Exam', 'English exam description', 2, '3141', '2025-03-05 15:00:00', '2025-03-05 17:00:00', 120);
 
 -- Insert data into the question table
-INSERT INTO "question" ("id", "type", "content", "media_url", "options", "answer") VALUES
-('11111111-1111-1111-1111-111111111111', 'MULTIPLE_CHOICE', 'What is 2+2?', '{}', '{"2", "3", "4", "5"}', '4'),
-('22222222-2222-2222-2222-222222222222', 'SHORT_ANSWER', 'Explain the theory of relativity.', '{}', '{}', 'Theory of relativity explanation'),
-('33333333-3333-3333-3333-333333333333', 'MULTIPLE_CHOICE', 'What is the capital of France?', '{}', '{"Berlin", "Madrid", "Paris", "Rome"}', 'Paris'),
-('44444444-4444-4444-4444-444444444444', 'SHORT_ANSWER', 'Describe the water cycle.', '{}', '{}', 'Water cycle description'),
-('55555555-5555-5555-5555-555555555555', 'MULTIPLE_CHOICE', 'What is the largest planet in our solar system?', '{}', '{"Earth", "Mars", "Jupiter", "Saturn"}', 'Jupiter');
+INSERT INTO "question" ("id", "creator", "type", "content", "media_url", "options", "answer") VALUES
+('11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 'MULTIPLE_CHOICE', 'What is 2+2?', '{}', '{"2", "3", "4", "5"}', '4'),
+('22222222-2222-2222-2222-222222222222', '22222222-2222-2222-2222-222222222222', 'SHORT_ANSWER', 'Explain the theory of relativity.', '{}', '{}', 'Theory of relativity explanation'),
+('33333333-3333-3333-3333-333333333333', '33333333-3333-3333-3333-333333333333', 'MULTIPLE_CHOICE', 'What is the capital of France?', '{}', '{"Berlin", "Madrid", "Paris", "Rome"}', 'Paris'),
+('44444444-4444-4444-4444-444444444444', '44444444-4444-4444-4444-444444444444', 'SHORT_ANSWER', 'Describe the water cycle.', '{}', '{}', 'Water cycle description'),
+('55555555-5555-5555-5555-555555555555', '55555555-5555-5555-5555-555555555555', 'MULTIPLE_CHOICE', 'What is the largest planet in our solar system?', '{}', '{"Earth", "Mars", "Jupiter", "Saturn"}', 'Jupiter');
 
 -- Insert data into the notification table
 INSERT INTO "notification" ("id", "sender_id", "receiver_id", "title", "content", "created_at", "seen") VALUES

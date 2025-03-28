@@ -16,9 +16,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 public class JwtUtils {
-    private PrivateKey privateKey;
-    private PublicKey publicKey;
-    private Long expiration;
+    private final PrivateKey privateKey;
+    private final PublicKey publicKey;
+    private final Long expiration;
 
     public JwtUtils(String privateKeyPath, String publicKeyPath, Long expiration) throws Exception {
         this.privateKey = loadPrivateKeyFromPem(privateKeyPath);

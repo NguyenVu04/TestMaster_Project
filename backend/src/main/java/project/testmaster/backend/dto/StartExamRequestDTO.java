@@ -1,5 +1,8 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class StartExamRequestDTO {
     private String passcode;
     private String examId;
@@ -12,11 +15,4 @@ public class StartExamRequestDTO {
         this.examId = examId;
     }
 
-    public String getPasscode() {
-        return passcode;
-    }
-
-    public String getExamId() {
-        return examId;
-    }
 }

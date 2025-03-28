@@ -1,7 +1,9 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
 import project.testmaster.backend.model.Question.QuestionType;
 
+@Getter
 public class SessionQuestionDTO {
     private String id;
     private String content;
@@ -24,31 +26,4 @@ public class SessionQuestionDTO {
         this.score = score;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String[] getOptions() {
-        return options;
-    }
-
-    public QuestionType getType() {
-        return type;
-    }
-
-    public String[] getMediaUrl() {
-        return mediaUrl;
-    }
-
-    public String getCurrentAnswer() {
-        return currentAnswer;
-    }
-
-    public float getScore() {
-        return score;
-    }
 }

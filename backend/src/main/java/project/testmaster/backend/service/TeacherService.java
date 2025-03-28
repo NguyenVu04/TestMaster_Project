@@ -17,11 +17,14 @@ import project.testmaster.backend.repository.TeacherRepository;
  */
 @Service
 public class TeacherService {
-    @Autowired
-    private TeacherRepository teacherRepository;
+    private final TeacherRepository teacherRepository;
     
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public TeacherService(TeacherRepository teacherRepository, UserService userService) {
+        this.teacherRepository = teacherRepository;
+        this.userService = userService;
+    }
 
     /**
      * Registers a new teacher based on the provided signup request data.
@@ -65,8 +68,7 @@ public class TeacherService {
      *         returns null if authentication fails
      */
     public UUID login(String email, String password) {
-        UUID id = userService.login(email, password);
 
-        return id;
+        return userService.login(email, password);
     }
 }

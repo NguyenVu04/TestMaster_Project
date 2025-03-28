@@ -1,5 +1,8 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class SigninRequestDTO {
     private String email;
     private String password;
@@ -12,11 +15,4 @@ public class SigninRequestDTO {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }

@@ -1,5 +1,8 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class NewExamRequestDTO {
     private String title;
     private String description;
@@ -26,39 +29,4 @@ public class NewExamRequestDTO {
         this.newQuestions = newQuestions;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Short getAttemptLimit() {
-        return attemptLimit;
-    }
-
-    public Long getStartTime() {
-        return startTime;
-    }
-
-    public Long getEndTime() {
-        return endTime;
-    }
-
-    public Integer getTimeLimit() {
-        return timeLimit;
-    }
-
-    public String getPasscode() {
-        return passcode;
-    }
-
-    public SelectedQuestionRequestDTO[] getSelectedQuestions() {
-        return selectedQuestions;
-    }
-
-    public NewQuestionRequestDTO[] getNewQuestions() {
-        return newQuestions;
-    }
 }
