@@ -1,24 +1,12 @@
 package project.testmaster.backend.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,21 +14,23 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import project.testmaster.backend.dto.ExamSubmitRequestDTO;
-import project.testmaster.backend.dto.SessionQuestionDTO;
-import project.testmaster.backend.dto.SessionRequestDTO;
-import project.testmaster.backend.dto.SessionResponseDTO;
-import project.testmaster.backend.dto.StartExamRequestDTO;
-import project.testmaster.backend.dto.StartExamResponseDTO;
-import project.testmaster.backend.dto.StudentAnswerDTO;
-import project.testmaster.backend.model.Account;
-import project.testmaster.backend.model.Exam;
-import project.testmaster.backend.model.ExamQuestion;
-import project.testmaster.backend.model.ExamSession;
-import project.testmaster.backend.model.ExamSessionId;
-import project.testmaster.backend.model.StudentAnswer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import project.testmaster.backend.dto.*;
+import project.testmaster.backend.model.*;
 import project.testmaster.backend.service.ExamService;
+import project.testmaster.backend.service.StudentService;
 import project.testmaster.backend.utils.UserUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/student")
@@ -55,6 +45,9 @@ public class StudentController {
 
     @Autowired
     private ExamService examService;
+
+    @Autowired
+    private StudentService studentService;
 
     @Operation(summary = "Get exam", description = "Get exam questions and answers", security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses({
@@ -82,12 +75,11 @@ public class StudentController {
 
             List<StudentAnswer> answers = session.getStudentAnswers();
 
-            Map<UUID, StudentAnswer> answerMap = answers
-                    .stream()
-                    .collect(
-                            Map::of,
-                            (map, answer) -> map.put(answer.getQuestion().getId(), answer),
-                            Map::putAll);
+            Map<UUID, StudentAnswer> answerMap = answers.stream()
+                    .collect(Collectors.toMap(
+                            answer -> answer.getQuestion().getId(),
+                            answer -> answer
+                    ));
             List<SessionQuestionDTO> questionDTOs = questions
                     .stream()
                     .map(question -> new SessionQuestionDTO(
@@ -138,7 +130,7 @@ public class StudentController {
     })
     @PostMapping(path = "exam/start")
     public ResponseEntity<StartExamResponseDTO> startExam(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Start exam request", required = true) 
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Start exam request", required = true)
             @Valid @RequestBody StartExamRequestDTO request) {
         try {
             UUID studentId = userUtils.getCurrentUserId();
@@ -183,7 +175,7 @@ public class StudentController {
     })
     @PostMapping(path = "exam/submit")
     public ResponseEntity<Void> submitExam(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Submit exam request", required = true) 
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Submit exam request", required = true)
             @Valid @RequestBody ExamSubmitRequestDTO request) {
         try {
 
@@ -231,7 +223,7 @@ public class StudentController {
     })
     @PostMapping(path = "exam/save")
     public ResponseEntity<Void> saveSession(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Submit exam request", required = true) 
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Submit exam request", required = true)
             @Valid @RequestBody ExamSubmitRequestDTO request) {
         try {
 
@@ -264,6 +256,65 @@ public class StudentController {
         } catch (Exception e) {
 
             logger.error("Failed to save exam", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @Operation(summary = "Get results of all exams", description = "Get exam results", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Exam results", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ExamResultDTO.class)))),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "500", description = "Failed to get exam results")
+    })
+    @GetMapping(path = "exam/results")
+    public ResponseEntity<List<ExamResultDTO>> getExamResults() {
+        try {
+
+            UUID studentId = userUtils.getCurrentUserId();
+
+            List<ExamResultDTO> results = studentService
+                    .getStudentById(studentId)
+                    .getExamResults()
+                    .stream()
+                    .filter(ExamSession::isSubmitted)
+                    .map(ExamResultDTO::fromEntity)
+                    .toList();
+
+            return ResponseEntity.ok(results);
+
+        } catch (Exception e) {
+
+            logger.error("Failed to get exam result", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @Operation(summary = "Get results of an exam", description = "Get exam result", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Exam result", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ExamResultDTO.class)))),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "500", description = "Failed to get exam result")
+    })
+    @GetMapping(path = "exam/result")
+    public ResponseEntity<List<ExamResultDTO>> getExamResult(@Parameter(name = "examId", in = ParameterIn.QUERY) @Valid @RequestParam(name = "examId") UUID examId) {
+        try {
+
+            UUID studentId = userUtils.getCurrentUserId();
+
+            List<ExamResultDTO> results = examService
+                    .getStudentExamSessions(examId, studentId)
+                    .stream()
+                    .filter(ExamSession::isSubmitted)
+                    .map(ExamResultDTO::fromEntity)
+                    .toList();
+
+            return ResponseEntity.ok(results);
+
+        } catch (Exception e) {
+
+            logger.error("Failed to get exam result", e);
             return ResponseEntity.internalServerError().build();
 
         }

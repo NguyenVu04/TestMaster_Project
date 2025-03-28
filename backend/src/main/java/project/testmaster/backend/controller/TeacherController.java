@@ -21,10 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.testmaster.backend.dto.*;
-import project.testmaster.backend.model.Exam;
-import project.testmaster.backend.model.ExamQuestion;
-import project.testmaster.backend.model.Question;
-import project.testmaster.backend.model.Teacher;
+import project.testmaster.backend.model.*;
 import project.testmaster.backend.repository.TeacherRepository;
 import project.testmaster.backend.service.ExamService;
 import project.testmaster.backend.service.QuestionService;
@@ -323,6 +320,52 @@ public class TeacherController {
         } catch (Exception e) {
 
             logger.error("Error while getting questions", e);
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @Operation(summary = "Get all results of students in an exam", description = "Get all results of students in an exam", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Exam results found", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ExamResultDTO.class)))),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Exam not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("exam/results")
+    public ResponseEntity<List<ExamResultDTO>> getExamResults(@Parameter(name = "examId", in = ParameterIn.QUERY) @Valid @RequestParam(name = "examId") UUID examId) {
+        try {
+
+            UUID teacherId = userUtils.getCurrentUserId();
+
+            Exam exam = examService.getExamById(examId);
+
+            if (exam == null) {
+
+                logger.error("Exam not found when getting exam results: {}", examId);
+                return ResponseEntity.notFound().build();
+
+            }
+
+            if (!exam.getTeacher().getUserId().equals(teacherId)) {
+
+                logger.error("Teacher not authorized to get exam results: {}", teacherId);
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+            }
+
+            List<ExamResultDTO> results = examService
+                    .getExamSessions(examId)
+                    .stream()
+                    .filter(ExamSession::isSubmitted)
+                    .map(ExamResultDTO::fromEntity)
+                    .toList();
+
+            return ResponseEntity.ok(results);
+
+        } catch (Exception e) {
+
+            logger.error("Error while getting exam results", e);
             return ResponseEntity.internalServerError().build();
 
         }

@@ -57,6 +57,14 @@ public class ExamService {
         return examSessionRepository.findByExamIdAndStudentIdAndAttemptId(examId, studentId, attemptId);
     }
 
+    public List<ExamSession> getStudentExamSessions(UUID examId, UUID studentId) {
+        return examSessionRepository.findByExamIdAndStudentId(examId, studentId);
+    }
+
+    public List<ExamSession> getExamSessions(UUID examId) {
+        return examSessionRepository.findByExamId(examId);
+    }
+
     public ExamSessionId startExamSession(UUID examId, UUID studentId, String passcode) {
         Exam exam = examRepository.findById(examId).orElse(null);
         if (exam == null) {
