@@ -1,6 +1,6 @@
 import NextAuth, { User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-
+import * as axiosReq from '@/app/axios';
 // Extend the User type to include custom properties
 declare module "next-auth" {
   interface User {
@@ -36,30 +36,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           ">>>>>>" +
             `https://02ea-171-253-40-101.ngrok-free.app/api/auth/signin/${credentials?.role}`
         );
-        const response = await fetch(
-          `https://02ea-171-253-40-101.ngrok-free.app/api/auth/signin/${credentials?.role}`,
+        // const response = await fetch(
+        //   `https://02ea-171-253-40-101.ngrok-free.app/api/auth/signin/${credentials?.role}`,
+        //   {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //       email: credentials?.email,
+        //       password: credentials?.password,
+        //     }),
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
+        const response = await axiosReq.post(
+          `/api/auth/signin/${credentials?.role}`,
           {
-            method: "POST",
-            body: JSON.stringify({
-              email: credentials?.email,
-              password: credentials?.password,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+            email: credentials?.email,
+            password: credentials?.password,
+          })
         console.log("Credentials:", credentials);
         console.log("Response:", response);
-        if (
-          !response.ok ||
-          response.status !== 200 ||
-          response.statusText !== "OK"
-        ) {
+        
+        let data = null;
+        if (response.data.accessToken) {
+          data = response.data;
+        } 
+        else {
           throw new Error("Invalid credentials");
         }
 
-        const data = await response.json();
         console.log("Data:", data);
 
         return data;
