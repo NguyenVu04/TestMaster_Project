@@ -1,19 +1,38 @@
 "use client";
 
+import { auth } from "@/app/auth/auth";
 import Logo from "@/public/Logo.png";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 function Header() {
+  // const [session, setSession] = useState<null | any>(null);
+  // useEffect(() => {
+  //   async function fetchSession() {
+  //     const session = await auth();
+  //     setSession(null);
+
+  //     console.log("Session:", session);
+  //   }
+  //   fetchSession();
+  // }, []);
+
   const session = useSession();
   console.log("Session:", session);
 
+  // if (session.status === "loading") {
+  //   return <div>Loading...</div>;
+  // }
+  // if (session.status === "unauthenticated") {
+  //   return <div>Please sign in</div>;
+  // }
+  // if (session.status === "authenticated") {
+  //   console.log("User:", session.data.user);
+  // }
   const userInfo = null;
-  const router = useRouter();
-
-  // if(!userInfo) router.push('/auth/login');
 
   return (
     <div
