@@ -7,6 +7,7 @@ import signinIm from "@/public/Illusttration.png";
 import { validateLoginData } from "@/lib/validation/auth";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { post } from "@/app/axios";
 
 export default function SignIn() {
   const router = useRouter();
