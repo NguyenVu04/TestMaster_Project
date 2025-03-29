@@ -7,8 +7,9 @@ import signinIm from "@/public/Illusttration.png";
 import { validateLoginData } from "@/lib/validation/auth";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { post } from "@/app/axios";
+// import { post } from "@/app/axios";
 
+import * as request from "@/app/axios";
 export default function SignIn() {
   const router = useRouter();
   const types = ["email", "password", "role"];
@@ -42,17 +43,15 @@ export default function SignIn() {
     }
     console.log("Login success", infor);
 
-    if (infor.role === "student") {
-      const res = await fetch("localhost:8080/api/auth/login");
-
-      if (!res.ok) {
-        console.error("Login failed:", res.statusText);
-      } else {
-        console.log("Login successful with student", res);
-      }
-    } else if (infor.role === "teacher") {
-      const res = await fetch("");
-    }
+    // const res = await request.post(`/auth/signin/${infor.role}`, {
+    //   email: infor.email,
+    //   password: infor.password,
+    // });
+    // if (!res.ok) {
+    //   console.error("Login failed:", res.statusText);
+    // } else {
+    //   console.log("Login successful with student", res);
+    // }
 
     // Use signIn from next-auth/react
     const result = await signIn("credentials", {
@@ -71,7 +70,7 @@ export default function SignIn() {
     }
     reset();
 
-    router.push("/student/1");
+    // router.push("/student/1");
   };
 
   const reset = () => {
