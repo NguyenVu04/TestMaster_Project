@@ -72,6 +72,7 @@ function Page() {
   const router = useRouter();
   function handleSubmit(event: any) {
     // router.push("/teacher/create-quiz/questions");
+    event.preventDefault();
   }
   function quizzInfoAction(
     prevState: MyFormData,
