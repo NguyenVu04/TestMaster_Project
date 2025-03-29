@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import signinIm from "@/public/Illusttration.png";
 import { validateLoginData } from "@/lib/validation/auth";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const types = ["email", "password", "role"];
@@ -15,6 +16,8 @@ export default function SignIn() {
   });
 
   const [errors, setErrors] = useState<any[]>([]);
+
+  const router = useRouter();
 
   function handleChange(event: any) {
     const { id, value } = event.target;
@@ -35,7 +38,10 @@ export default function SignIn() {
       return;
     }
     console.log("Login success", infor);
+    window.localStorage.setItem("user", JSON.stringify(infor));
     reset();
+
+    router.push("/student/1");
   }
 
   const reset = () => {

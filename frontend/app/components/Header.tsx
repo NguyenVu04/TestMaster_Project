@@ -1,11 +1,19 @@
+'use client'
+
 import Logo from "@/public/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Header() {
+  const userInfo = null;
+  const router = useRouter();
+
+  // if(!userInfo) router.push('/auth/login');
+
   return (
     <div
-      className="bg-white sticky top-0 w-full z-50 shadow-md"
+      className="bg-white fixed top-0 w-full z-50 shadow-md"
       // style={{ backgroundColor: "#1A202C" }}
     >
       <nav className="container mx-auto flex justify-between items-center py-4 ">
@@ -37,7 +45,19 @@ function Header() {
             </a>
           </li>
           <li className="flex items-center">
-            <Link className="inline-block w-full py-4 px-6 border border-[#31F7C4] text-[#31F7C4]" href="/auth/login">Login</Link>
+            {
+              userInfo ? (
+                <div>
+                  {/* <p className="text-black">Hello student: {userInfo?.email}</p> */}
+
+                  <Link className="inline-block w-full hover:text-gray-400" href="/">
+                    Logout
+                  </Link>
+                </div>
+              ) : (
+                <Link className="inline-block w-full py-4 px-6 border border-[#31F7C4] text-[#31F7C4]" href="/auth/login">Login</Link>
+              )
+            }
           </li>
         </ul>
       </nav>
