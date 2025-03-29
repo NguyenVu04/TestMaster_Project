@@ -5,8 +5,8 @@ import Link from "next/link";
 
 import signinIm from "@/public/Illusttration.png";
 import { validateLoginData } from "@/lib/validation/auth";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function SignIn() {
   const router = useRouter();
@@ -69,6 +69,8 @@ export default function SignIn() {
       router.push("/auth/my-account");
     }
     reset();
+
+    router.push("/student/1");
   };
 
   const reset = () => {

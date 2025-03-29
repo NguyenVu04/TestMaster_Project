@@ -6,3 +6,13 @@ export type Question = {
     options: string[],
     answer: string
 }
+
+export type Exam = {
+    title: string,
+    description: string,
+    attempt_limit: number,
+    passcode: string,
+    start_time: Date,
+    end_time: Date,
+    time_limit: number
+}
