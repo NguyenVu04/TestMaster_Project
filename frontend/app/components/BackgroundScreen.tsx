@@ -3,7 +3,7 @@ import React from "react";
 
 const BackgroundScreen = ({ children }: any) => {
   return (
-    <div className="flex flex-1 flex-col items-center relative ">
+    <div className="flex flex-1 flex-col items-center relative bg-white">
       <Image
         src="/outline5.png"
         alt="logo"
