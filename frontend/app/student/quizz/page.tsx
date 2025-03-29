@@ -81,7 +81,7 @@ function page() {
 
   return (
     <div className='py-[81px] text-black w-full'>
-      <h1>Quizz</h1>
+      <h1 className='text-center'>Quizz</h1>
       {
         examInfo && (
           <div className='text-start container mx-auto'>
