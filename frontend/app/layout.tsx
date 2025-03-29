@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import BackgroundScreen from "@/app/components/BackgroundScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
         style={{ backgroundColor: "#fff" }}
       >
         <Header />
-        {children}
+        <BackgroundScreen>{children}</BackgroundScreen>
         <Footer />
       </body>
     </html>

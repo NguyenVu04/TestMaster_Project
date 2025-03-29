@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 
 export default function Home(): ReactElement {
   return (
-    <div className="bg-white">
+    <div className="bg-white z-30 px-4">
       {/* Phần Hero (Màn hình đầu tiên) */}
       <section className="flex flex-row items-center justify-center">
         {/* Nội dung bên trái */}

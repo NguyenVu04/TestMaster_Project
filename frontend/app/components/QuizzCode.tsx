@@ -20,8 +20,7 @@ const QuizzCode = ({ onClick }: QuizzCodeProps) => {
             onClick(inputRef.current.value);
           }
         }}
-        className={`text-white p-2 rounded-md font-bold `}
-        style={{ backgroundColor: "#2DFF9C" }}
+        className={`text-white p-2 rounded-md font-bold bg-[#2DFF9C] `}
       >
         Go
       </button>
