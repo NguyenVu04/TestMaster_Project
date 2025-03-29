@@ -1,11 +1,15 @@
 "use client";
 
 import Logo from "@/public/Logo.png";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 function Header() {
+  const session = useSession();
+  console.log("Session:", session);
+
   const userInfo = null;
   const router = useRouter();
 

@@ -4,6 +4,7 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import BackgroundScreen from "@/app/components/BackgroundScreen";
 import { ReduxProvider } from "@/app/ReduxProvider";
+import { SessionProvider } from "next-auth/react";
 
 
 export const metadata: Metadata = {
@@ -13,8 +14,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  session,
 }: Readonly<{
   children: React.ReactNode;
+  session: any; // specify the type for session
 }>) {
   return (
     <html lang="en">
@@ -23,9 +26,11 @@ export default function RootLayout({
         style={{ backgroundColor: "white" }}
       >
         <ReduxProvider>
-          <Header />
-          <BackgroundScreen>{children}</BackgroundScreen>
-          <Footer />
+          <SessionProvider session={session}>
+            <Header />
+            <BackgroundScreen>{children}</BackgroundScreen>
+            <Footer />
+          </SessionProvider>
         </ReduxProvider>
       </body>
     </html>
