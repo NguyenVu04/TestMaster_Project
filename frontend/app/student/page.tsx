@@ -111,7 +111,7 @@ function StudentHome() {
   const [quizzCode, setQuizzCode] = React.useState("");
   console.log(quizzCode);
   return (
-    <div className="pb-32 flex flex-1 flex-col items-center justify-center relative ">
+    <div className="py-[81px] flex flex-1 flex-col items-center justify-center relative ">
       <Image
         src="/outline5.png"
         alt="logo"

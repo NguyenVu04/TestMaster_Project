@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import BackgroundScreen from "@/app/components/BackgroundScreen";
-import { store } from "@/app/store";
 import { ReduxProvider } from "@/app/ReduxProvider";
+import SessionProviderCustom from "@/app/SessionProvider";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,12 +21,14 @@ export default function RootLayout({
     <html lang="en">
       <body
         className="min-h-screen flex flex-col"
-        style={{ backgroundColor: "#fff" }}
+        style={{ backgroundColor: "white" }}
       >
         <ReduxProvider>
-          <Header />
-          <BackgroundScreen>{children}</BackgroundScreen>
-          <Footer />
+          <SessionProviderCustom>
+            <Header />
+            <BackgroundScreen>{children}</BackgroundScreen>
+            <Footer />
+          </SessionProviderCustom>
         </ReduxProvider>
       </body>
     </html>

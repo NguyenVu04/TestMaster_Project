@@ -21,7 +21,7 @@ const StudentHistoryCard = ({ data }: StudentHistoryCardProps) => {
 
   return (
     <div
-      className="h-60 w-60 flex  flex-col gap-10  items-center border-2 rounded-lg"
+      className="h-60 w-60 flex  flex-col gap-10 text-black  items-center border-2 rounded-lg"
       style={{ borderColor: "#2ABF9C" }}
     >
       <div

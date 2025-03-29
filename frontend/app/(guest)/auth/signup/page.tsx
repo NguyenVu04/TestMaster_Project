@@ -37,7 +37,7 @@ export default function SignIn() {
       ...infor,
       [types[id]]: value,
     });
-    if (errors) {
+    if (errors && errors.length > 0) {
       const er = errors;
       er[id].message = "";
       setErrors(er);
@@ -54,7 +54,7 @@ export default function SignIn() {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/api/auth/signup/${infor.role}`,
+        `https://b8c6-171-253-40-101.ngrok-free.app/api/auth/signup/${infor.role}`,
         {
           method: "POST",
           headers: {

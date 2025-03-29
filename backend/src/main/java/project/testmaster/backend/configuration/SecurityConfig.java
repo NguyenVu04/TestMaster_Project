@@ -1,6 +1,5 @@
 package project.testmaster.backend.configuration;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
@@ -67,8 +66,10 @@ public class SecurityConfig {
      */
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(Collections.singletonList("*"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        config.setAllowCredentials(true);
+        config.addAllowedOriginPattern(CorsConfiguration.ALL);
+        config.addAllowedHeader(CorsConfiguration.ALL);
+        config.addAllowedMethod(CorsConfiguration.ALL);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;

@@ -1,13 +1,14 @@
 import { auth } from "@/app/auth/auth";
 import { SessionProvider } from "next-auth/react";
 import SignOutButton from "../logout/signOutButton"; // Import the Client Component
+import { redirect } from "next/navigation";
 
 async function page() {
   const session = await auth();
 
   if (!session) {
     return null;
-  }
+  } else return redirect(`${session?.user?.role}`);
 
   const user = session?.user;
   console.log("User:", user);
@@ -38,6 +39,9 @@ async function page() {
         </p>
         <p>
           <strong>Username:</strong> {user?.username || "N/A"}
+        </p>
+        <p>
+          <strong>AccessToken: </strong> {user?.accessToken || "N/A"}
         </p>
         <p>
           <strong>Expires in:</strong> {session.expires || "N/A"}
