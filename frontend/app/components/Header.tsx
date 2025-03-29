@@ -20,6 +20,8 @@ function Header() {
   //   fetchSession();
   // }, []);
 
+  const role = window.localStorage.getItem("role");
+
   const session = useSession();
   console.log("Session:", session);
 
@@ -53,9 +55,9 @@ function Header() {
         </div>
         <ul className="flex justify-between items-center flex-1 gap-8 text-[#E0E0E0]">
           <li className="flex items-center">
-            <a className="inline-block w-full p-4 hover:text-gray-400" href="#">
-              How it work
-            </a>
+            <Link className="inline-block w-full p-4 hover:text-gray-400" href={`/${role}`}>
+              Home
+            </Link>
           </li>
           <li className="flex items-center">
             <a className="inline-block w-full p-4 hover:text-gray-400" href="#">
@@ -63,9 +65,9 @@ function Header() {
             </a>
           </li>
           <li className="flex items-center">
-            <a className="inline-block w-full p-4 hover:text-gray-400" href="#">
-              About us
-            </a>
+            <Link className="inline-block w-full p-4 hover:text-gray-400" href={`/${role}/profile`}>
+              Your profile
+            </Link>
           </li>
           <li className="flex items-center">
             {userInfo ? (
