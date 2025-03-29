@@ -1,11 +1,12 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: "https://02ea-171-253-40-101.ngrok-free.app",
+  baseURL: "https://b8c6-171-253-40-101.ngrok-free.app",
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "ngrok-skip-browser-warning": "true" // Add this for ngrok specifically
+    "ngrok-skip-browser-warning": "true", // Add this for ngrok specifically
+    "withCredentials": "true"
   },
   withCredentials: true // If you need to send cookies
 });
