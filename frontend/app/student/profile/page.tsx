@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
 
 import * as axiosReq from '@/app/axios';
-function page() {
+function Page() {
   const session = useSession();
     
   console.log('my session' ,session);
@@ -17,10 +17,7 @@ function page() {
     //   }
     // });
 
-
-    // console.log('res', res);
-
-    fetch('https://b8c6-171-253-40-101.ngrok-free.app/api/user/profile',
+    fetch('http://localhost:8080/api/user/profile',
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -28,21 +25,13 @@ function page() {
             },
             method: 'GET',
         }
-    )
-    .then(res => {
-        console.log('res', res);
-        console.log(res.text())
-        // return res.json()
+    ).then((response) => {
+        return response.json()
+    }).then((data) => {
+        console.log('data', data);
+    }).catch((error) => {
+        console.log('error', error);
     })
-    // .then(data => {
-    //     console.log(data);
-    // })
-    .catch(err => {
-        console.log(err);
-    })
-
-
-
   }
 
   return (
@@ -53,4 +42,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
