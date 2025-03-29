@@ -40,6 +40,9 @@ async function page() {
           <strong>Username:</strong> {user?.username || "N/A"}
         </p>
         <p>
+          <strong>AccessToken: </strong> {user?.accessToken || "N/A"}
+        </p>
+        <p>
           <strong>Expires in:</strong> {session.expires || "N/A"}
         </p>
       </div>
