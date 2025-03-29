@@ -1,6 +1,7 @@
 package project.testmaster.backend.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +21,7 @@ import project.testmaster.backend.repository.StudentRepository;
 
 @SpringBootTest
 @Transactional
-class ExamServiceIntegrationTest {
+class ExamServiceTest {
 
     @Autowired
     private ExamService examService;
@@ -55,4 +56,13 @@ class ExamServiceIntegrationTest {
 
     }
 
+    @Test
+    void getExamById_ShouldReturnNull() {
+        // Act
+        UUID testExamId = UUID.randomUUID();
+        Exam result = examService.getExamById(testExamId);
+
+        // Assert
+        assertNull(result);
+    }
 }
