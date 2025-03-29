@@ -91,11 +91,17 @@ public class Question {
     public String getCorrectAnswer() {
         return answer;
     }
-
+    
     public void setType(QuestionType type) {
         this.type = type;
     }
-
+    
+    public Teacher getTeacher() {
+        return creator;
+    }
+    public void setId(UUID id) {
+        this.id = id;
+    }
     public void setContent(String content) {
         this.content = content;
     }
