@@ -5,17 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Table(name = "question")
@@ -29,6 +22,10 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator", referencedColumnName = "user_id")
+    private Teacher creator;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "type", columnDefinition = "question_type")
@@ -54,8 +51,9 @@ public class Question {
         this.id = id;
     }
 
-    public Question(QuestionType type, String content, String[] mediaUrl, String[] options, String answer) {
+    public Question(Teacher creator, QuestionType type, String content, String[] mediaUrl, String[] options, String answer) {
         this.type = type;
+        this.creator = creator;
         this.content = content;
         this.mediaUrl = mediaUrl;
         this.options = options;
@@ -75,11 +73,11 @@ public class Question {
     }
 
     public List<String> getMediaUrl() {
-        return new ArrayList<>(Arrays.asList(mediaUrl));
+        return new ArrayList<>(mediaUrl != null ? Arrays.asList(mediaUrl) : new ArrayList<>());
     }
 
     public List<String> getOptions() {
-        return new ArrayList<>(Arrays.asList(options));
+        return new ArrayList<>(options != null ? Arrays.asList(options) : new ArrayList<>());
     }
 
     public String getAnswer() {
@@ -136,5 +134,10 @@ public class Question {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    @Transactional
+    public Teacher getCreator() {
+        return creator;
     }
 }

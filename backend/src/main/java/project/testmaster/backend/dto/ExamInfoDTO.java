@@ -2,21 +2,73 @@ package project.testmaster.backend.dto;
 
 import java.util.UUID;
 
+import lombok.Getter;
 import project.testmaster.backend.model.Exam;
 
 /**
  * Data Transfer Object for Exam information.
  */
+@Getter
 public class ExamInfoDTO {
+    /**
+     * -- GETTER --
+     *  Returns the ID of the exam.
+     *
+     */
     private String id;
+    /**
+     * -- GETTER --
+     *  Returns the title of the exam.
+     *
+     */
     private String title;
+    /**
+     * -- GETTER --
+     *  Returns the description of the exam.
+     *
+     */
     private String description;
+    /**
+     * -- GETTER --
+     *  Returns the attempt limit for the exam.
+     *
+     */
     private Short attemptLimit;
+    /**
+     * -- GETTER --
+     *  Returns the start time of the exam in milliseconds.
+     *
+     */
     private Long startTime;
+    /**
+     * -- GETTER --
+     *  Returns the end time of the exam in milliseconds.
+     *
+     */
     private Long endTime;
+    /**
+     * -- GETTER --
+     *  Returns the time limit for the exam.
+     *
+     */
     private Integer timeLimit;
+    /**
+     * -- GETTER --
+     *  Returns the first name of the teacher.
+     *
+     */
     private String teacherFirstName;
+    /**
+     * -- GETTER --
+     *  Returns the last name of the teacher.
+     *
+     */
     private String teacherLastName;
+    /**
+     * -- GETTER --
+     *  Returns the ID of the teacher.
+     *
+     */
     private String teacherId;
 
     /**
@@ -50,6 +102,7 @@ public class ExamInfoDTO {
             String teacherFirstName,
             String teacherLastName,
             UUID teacherId) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.attemptLimit = attemptLimit;
@@ -81,93 +134,4 @@ public class ExamInfoDTO {
                 exam.getTeacher().getUserId());
     }
 
-    /**
-     * Returns the ID of the exam.
-     *
-     * @return the ID of the exam
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Returns the title of the exam.
-     *
-     * @return the title of the exam
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Returns the description of the exam.
-     *
-     * @return the description of the exam
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Returns the attempt limit for the exam.
-     *
-     * @return the attempt limit for the exam
-     */
-    public Short getAttemptLimit() {
-        return attemptLimit;
-    }
-
-    /**
-     * Returns the start time of the exam in milliseconds.
-     *
-     * @return the start time of the exam in milliseconds
-     */
-    public Long getStartTime() {
-        return startTime;
-    }
-
-    /**
-     * Returns the end time of the exam in milliseconds.
-     *
-     * @return the end time of the exam in milliseconds
-     */
-    public Long getEndTime() {
-        return endTime;
-    }
-
-    /**
-     * Returns the time limit for the exam.
-     *
-     * @return the time limit for the exam
-     */
-    public Integer getTimeLimit() {
-        return timeLimit;
-    }
-
-    /**
-     * Returns the first name of the teacher.
-     *
-     * @return the first name of the teacher
-     */
-    public String getTeacherFirstName() {
-        return teacherFirstName;
-    }
-
-    /**
-     * Returns the last name of the teacher.
-     *
-     * @return the last name of the teacher
-     */
-    public String getTeacherLastName() {
-        return teacherLastName;
-    }
-
-    /**
-     * Returns the ID of the teacher.
-     *
-     * @return the ID of the teacher
-     */
-    public String getTeacherId() {
-        return teacherId;
-    }
 }

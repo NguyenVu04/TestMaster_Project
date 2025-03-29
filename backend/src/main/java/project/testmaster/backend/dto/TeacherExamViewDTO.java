@@ -1,7 +1,14 @@
 package project.testmaster.backend.dto;
 
+import lombok.Getter;
 import project.testmaster.backend.model.Exam;
 
+/**
+ * Data Transfer Object for representing a teacher's view of an exam.
+ * This class encapsulates all necessary details about an exam for the teacher's perspective,
+ * including metadata, timing, a list of questions, and other relevant information.
+ */
+@Getter
 public class TeacherExamViewDTO {
     private String examId;
     private String title;
@@ -12,9 +19,25 @@ public class TeacherExamViewDTO {
     private TeacherQuestionViewDTO[] questions;
     private int timeLimit;
 
+    /**
+     * Default constructor for the TeacherExamViewDTO class.
+     * Initializes a new instance of TeacherExamViewDTO with no pre-set properties or values.
+     */
     public TeacherExamViewDTO() {
     }
 
+    /**
+     * Constructs a new instance of TeacherExamViewDTO with specified exam details.
+     *
+     * @param examId    the unique identifier of the exam
+     * @param title     the title of the exam
+     * @param description a brief description of the exam
+     * @param passcode  the access passcode for the exam
+     * @param startTime the start time of the exam in milliseconds
+     * @param endTime   the end time of the exam in milliseconds
+     * @param questions an array of questions included in the exam
+     * @param timeLimit the time limit for completing the exam in seconds
+     */
     public TeacherExamViewDTO(String examId, String title, String description, String passcode, long startTime,
             long endTime, TeacherQuestionViewDTO[] questions, int timeLimit) {
         this.examId = examId;
@@ -40,37 +63,5 @@ public class TeacherExamViewDTO {
                         .map(TeacherQuestionViewDTO::fromEntity)
                         .toArray(TeacherQuestionViewDTO[]::new),
                 exam.getTimeLimit());
-    }
-
-    public String getExamId() {
-        return examId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getPasscode() {
-        return passcode;
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public TeacherQuestionViewDTO[] getQuestions() {
-        return questions;
-    }
-
-    public int getTimeLimit() {
-        return timeLimit;
     }
 }

@@ -1,12 +1,13 @@
 package project.testmaster.backend.configuration;
 
 import java.util.Arrays;
+import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,11 +24,14 @@ import project.testmaster.backend.utils.JwtUtils;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private EnvConfig env;
+    private final EnvConfig env;
 
-    @Autowired
-    private AccountDetailsService userDetailsService;
+    private final AccountDetailsService userDetailsService;
+
+    public SecurityConfig(EnvConfig env, AccountDetailsService userDetailsService) {
+        this.env = env;
+        this.userDetailsService = userDetailsService;
+    }
 
     /**
      * Configures the security filter chain.
@@ -50,7 +54,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").permitAll()
                         .anyRequest().permitAll())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -63,7 +67,7 @@ public class SecurityConfig {
      */
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList(env.getFrontendUrl()));
+        config.setAllowedOriginPatterns(Collections.singletonList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

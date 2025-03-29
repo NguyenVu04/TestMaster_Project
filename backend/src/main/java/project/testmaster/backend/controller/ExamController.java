@@ -20,6 +20,10 @@ import jakarta.validation.Valid;
 import project.testmaster.backend.dto.ExamInfoDTO;
 import project.testmaster.backend.service.ExamService;
 
+/**
+ * Controller to manage operations related to exams.
+ * Provides endpoints to retrieve exam information.
+ */
 @RestController
 @RequestMapping(path = "/api/exam")
 public class ExamController {
@@ -28,6 +32,12 @@ public class ExamController {
     @Autowired
     private ExamService examService;
 
+    /**
+     * Retrieves an exam by its ID.
+     *
+     * @param id the ID of the exam to be retrieved
+     * @return a ResponseEntity containing the ExamInfoDTO if the exam is found, or an appropriate HTTP status
+     */
     @Operation(summary = "Get exam by id", description = "Get exam by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Exam found"),

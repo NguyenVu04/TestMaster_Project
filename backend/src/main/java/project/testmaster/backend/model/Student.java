@@ -10,6 +10,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,10 +19,12 @@ import java.util.UUID;
 @Entity
 @Table(name = "student")
 public class Student {
+    @Getter
     @Id
     @Column(name = "user_id")
     private UUID userId;
 
+    @Getter
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -39,14 +42,6 @@ public class Student {
 
     public Student(User user) {
         this.user = user;
-    }
-
-    public UUID getUserId() {
-        return this.userId;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public List<ExamSession> getExamResults() {

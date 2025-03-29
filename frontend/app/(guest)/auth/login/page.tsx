@@ -6,8 +6,11 @@ import Link from "next/link";
 import signinIm from "@/public/Illusttration.png";
 import { validateLoginData } from "@/lib/validation/auth";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+
 
 export default function SignIn() {
+  const router = useRouter();
   const types = ["email", "password", "role"];
   const [infor, setInfor] = useState({
     email: "",
@@ -17,7 +20,6 @@ export default function SignIn() {
 
   const [errors, setErrors] = useState<any[]>([]);
 
-  const router = useRouter();
 
   function handleChange(event: any) {
     const { id, value } = event.target;
@@ -26,19 +28,40 @@ export default function SignIn() {
       [types[id]]: value,
     });
     const er = errors;
-    er[id].message = "";
-    setErrors(er);
+
+    if (er[id]){
+      er[id].message = "";
+      setErrors(er);
+
+    }
   }
 
-  async function handleSignIn() {
+  const handleSignIn= async () => {
     const { success, errors } = validateLoginData(infor);
-    console.log(errors);
     if (!success) {
       setErrors(errors);
       return;
     }
     console.log("Login success", infor);
-    window.localStorage.setItem("user", JSON.stringify(infor));
+
+    // window.localStorage.setItem("user", JSON.stringify(infor));
+
+    
+    // Use signIn from next-auth/react
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: infor.email,
+      password: infor.password,
+      role: infor.role, // Include role if needed
+    });
+
+    if (result?.error) {
+      console.error("Login failed:", result.error);
+    } else {
+      console.log("Login successful");
+      // Redirect to the home page
+      router.push("/auth/my-account");
+    }
     reset();
 
     router.push("/student/1");
