@@ -5,26 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import jakarta.transaction.Transactional;
 import project.testmaster.backend.model.Account;
-import project.testmaster.backend.repository.AccountRepository;
 
 @SpringBootTest
+@Transactional
 class AccountServiceTest {
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -78,22 +70,3 @@ class AccountServiceTest {
         assertFalse(result);
     }
 }
-
-// @SpringBootTest
-// class AccountServiceIntegrationTest {
-// @Autowired
-// private AccountRepository accountRepository;
-
-// @Autowired
-// private AccountService accountService;
-
-// @Test
-// void getAccountByEmail_WithRealDatabase() {
-// String email = "kudo@gmail.com";
-// Account result = accountService.getAccountByEmail(email);
-
-// // Nếu email tồn tại trong DB
-// assertNotNull(result);
-// assertEquals(email, result.getEmail());
-// }
-// }

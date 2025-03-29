@@ -1,6 +1,8 @@
 package project.testmaster.backend.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.UUID;
 
@@ -34,7 +36,7 @@ class AccountDetailsServiceTest {
     @BeforeEach
     void setUp() {
         // Create test user and account
-        User user = userService.createUser(
+        userService.createUser(
                 "Test",
                 "User",
                 "0123456789",

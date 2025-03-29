@@ -1,19 +1,19 @@
 package project.testmaster.backend.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.UUID;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.testmaster.backend.model.Account;
 import project.testmaster.backend.model.User;
-import project.testmaster.backend.repository.AccountRepository;
-import project.testmaster.backend.repository.UserRepository;
 
 @SpringBootTest
 @Transactional
@@ -23,16 +23,9 @@ class UserServiceTest {
     private UserService userService;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
     private AccountService accountService;
 
     private User testUser;
-    private Account testAccount;
 
     @BeforeEach
     void setUp() {
@@ -42,7 +35,6 @@ class UserServiceTest {
                 "0123456789",
                 "test@gmail.com",
                 "password123");
-        testAccount = accountService.getAccountByEmail("test_create@gmail.com");
     }
 
     @Test
