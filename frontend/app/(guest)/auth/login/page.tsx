@@ -69,7 +69,7 @@ export default function SignIn() {
     } else {
       console.log("Login successful");
       // Redirect to the home page
-      router.push(`/${infor.role}`);
+      router.push(`../${infor.role}`);
     }
     reset();
 
