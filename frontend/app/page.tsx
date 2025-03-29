@@ -19,7 +19,7 @@ export default function Home(): ReactElement {
               Bắt đầu làm bài
             </button> */}
             <Link href="/auth/login" className={styles.heroButtonPrimary}>
-              Bắt đầu làm bài
+              Bất đầu làm bài
             </Link>
             <Link href="#know-more" className={styles.heroButtonSecondary}>
               Tìm hiểu thêm

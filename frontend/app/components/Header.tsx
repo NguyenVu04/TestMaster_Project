@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Logo from "@/public/Logo.png";
 import Image from "next/image";
@@ -45,19 +45,25 @@ function Header() {
             </a>
           </li>
           <li className="flex items-center">
-            {
-              userInfo ? (
-                <div>
-                  {/* <p className="text-black">Hello student: {userInfo?.email}</p> */}
+            {userInfo ? (
+              <div>
+                {/* <p className="text-black">Hello student: {userInfo?.email}</p> */}
 
-                  <Link className="inline-block w-full hover:text-gray-400" href="/">
-                    Logout
-                  </Link>
-                </div>
-              ) : (
-                <Link className="inline-block w-full py-4 px-6 border border-[#31F7C4] text-[#31F7C4]" href="/auth/login">Login</Link>
-              )
-            }
+                <Link
+                  className="inline-block w-full hover:text-gray-400"
+                  href="/"
+                >
+                  Logout
+                </Link>
+              </div>
+            ) : (
+              <Link
+                className="inline-block w-full py-4 px-6 border border-[#31F7C4] text-[#31F7C4]"
+                href="/auth/login"
+              >
+                Login
+              </Link>
+            )}
           </li>
         </ul>
       </nav>
