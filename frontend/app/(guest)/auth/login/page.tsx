@@ -69,6 +69,8 @@ export default function SignIn() {
     } else {
       console.log("Login successful");
       // Redirect to the home page
+
+      window.localStorage.setItem("role", infor.role);
       router.push(`../${infor.role}`);
     }
     reset();

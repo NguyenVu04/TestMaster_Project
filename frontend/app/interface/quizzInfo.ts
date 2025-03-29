@@ -1,0 +1,1 @@
+export type QuizzInfo = { id: string; passcode: string };
