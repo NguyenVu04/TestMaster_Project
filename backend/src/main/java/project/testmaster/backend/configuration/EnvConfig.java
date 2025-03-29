@@ -15,7 +15,7 @@ public class EnvConfig {
      *  Returns the frontend URL from the environment configuration.
      *
      */
-    @Value("${env.frontend.url}")
+    @Value("${env.frontend.url}${env.frontend.url}")
     private String frontendUrl;
 
     /**
