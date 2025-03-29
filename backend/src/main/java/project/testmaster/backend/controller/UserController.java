@@ -30,6 +30,11 @@ import project.testmaster.backend.model.Account;
 import project.testmaster.backend.model.User;
 import project.testmaster.backend.service.UserService;
 
+/**
+ * REST controller for managing user profiles.
+ * Provides endpoints for retrieving, updating, and deleting user profile information.
+ * Secured using a bearer token authentication scheme.
+ */
 @RestController
 @RequestMapping(path = "/api/user")
 @SecuritySchemes({
@@ -41,6 +46,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Retrieves the profile of the currently authenticated user.
+     *
+     * @return a ResponseEntity containing the user's profile encapsulated in a UserProfileDTO object if the operation is
+     * successful, or an internal server error response in case of an exception.
+     */
     @Operation(
             summary = "Get user profile",
             description = "Get user profile",
@@ -77,6 +88,19 @@ public class UserController {
         }
     }
 
+    /**
+     * Updates the profile of the currently authenticated user.
+     *
+     * @param request the user profile data to update, encapsulated in a UserProfileDTO object.
+     *                It must include the user's id and updated fields such as first name, last name,
+     *                phone number, and email.
+     * @return a ResponseEntity containing the updated UserProfileDTO object with the modified user profile
+     *         data if the update is successful, or an appropriate HTTP status code if an error occurs.
+     *         - HTTP 200: User profile updated successfully.
+     *         - HTTP 400: Bad request, e.g., user ID mismatch.
+     *         - HTTP 403: Forbidden, unauthorized access.
+     *         - HTTP 500: Internal server error.
+     */
     @Operation(
             summary = "Update user profile",
             description = "Update user profile",

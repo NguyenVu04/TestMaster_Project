@@ -38,6 +38,9 @@ public interface ExamSessionRepository extends JpaRepository<ExamSession, ExamSe
     @Query("SELECT es FROM ExamSession es WHERE es.id.examId = ?1 AND es.id.studentId = ?2 ORDER BY es.id.attemptId")
     List<ExamSession> findByExamIdAndStudentId(UUID examId, UUID studentId);
 
+    @Query("SELECT es FROM ExamSession es WHERE es.id.examId = ?1 ORDER BY es.id.attemptId")
+    List<ExamSession> findByExamId(UUID examId);
+
     /**
      * Deletes an ExamSession entry from the database for a specific exam, student, and attempt.
      *

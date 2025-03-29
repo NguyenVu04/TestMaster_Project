@@ -1,0 +1,8 @@
+project.testmaster.backend
+project.testmaster.backend.configuration
+project.testmaster.backend.controller
+project.testmaster.backend.dto
+project.testmaster.backend.model
+project.testmaster.backend.repository
+project.testmaster.backend.service
+project.testmaster.backend.utils
