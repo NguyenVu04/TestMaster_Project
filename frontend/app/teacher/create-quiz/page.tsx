@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useActionState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useActionState, useEffect } from "react";
+import { redirect, useRouter } from "next/navigation";
 
 import QuestionFormat from "@/app/interface/questionFormats";
 
@@ -23,19 +23,7 @@ type MyFormData = {
     questionFormat: QuestionFormat;
     file: File | undefined;
   };
-};
-
-let INIT_FORM_DATA: MyFormData = {
-  errors: {},
-  currInput: {
-    title: "",
-    description: "",
-    passcode: "",
-    time_limit: "",
-    date: undefined,
-    questionFormat: "",
-    file: undefined,
-  },
+  init: boolean;
 };
 
 function Page() {
@@ -116,6 +104,7 @@ function Page() {
         questionFormat: data.questionFormat as QuestionFormat,
         file: data.file,
       },
+      init: false,
     };
   }
 
@@ -129,8 +118,19 @@ function Page() {
       date: undefined,
       questionFormat: "",
     },
+    init: true,
   });
-  console.log(formState.currInput.date);
+
+  useEffect(() => {
+    if (
+      formState.errors &&
+      Object.keys(formState.errors).length == 0 &&
+      !formState.init
+    ) {
+      localStorage.setItem("quizzInfo", JSON.stringify(formState.currInput));
+      redirect("/teacher/create-quiz/questions");
+    }
+  }, [formState]);
   return (
     <>
       <form
@@ -312,7 +312,6 @@ function Page() {
         <button
           className="p-4 rounded bg-[#31F7C4] text-white font-bold text-xl "
           type="submit"
-          onClick={handleSubmit}
         >
           Create quizz!
         </button>
