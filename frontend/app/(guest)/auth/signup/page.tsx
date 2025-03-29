@@ -37,7 +37,7 @@ export default function SignIn() {
       ...infor,
       [types[id]]: value,
     });
-    if (errors) {
+    if (errors && errors.length > 0) {
       const er = errors;
       er[id].message = "";
       setErrors(er);
