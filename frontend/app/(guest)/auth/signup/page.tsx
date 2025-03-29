@@ -4,8 +4,8 @@ import Image from "next/image";
 
 import signinIm from "@/public/Illusttration.png";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { validateSignupData } from "@/lib/validation/auth";
+import { redirect } from "next/navigation";
 
 export default function SignIn() {
   const types = [
@@ -29,7 +29,7 @@ export default function SignIn() {
 
   const [errors, setErrors] = useState<any[]>([]);
 
-  // const router = useRouter();
+  
 
   function handleChange(event: any) {
     const { id, value } = event.target;
@@ -54,7 +54,7 @@ export default function SignIn() {
 
     try {
       const res = await fetch(
-        `https://b8c6-171-253-40-101.ngrok-free.app/api/auth/signup/${infor.role}`,
+        `http://localhost:8080/api/auth/signup/${infor.role}`,
         {
           method: "POST",
           headers: {
@@ -80,8 +80,8 @@ export default function SignIn() {
     }
 
     console.log("Sign up success!", infor);
-    reset();
-    // router.push('app/');
+    // reset();
+    redirect('/auth/login');
   }
 
   const reset = () => {
