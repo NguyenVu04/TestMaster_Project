@@ -54,7 +54,7 @@ export default function SignIn() {
 
     try {
       const res = await fetch(
-        `https://02ea-171-253-40-101.ngrok-free.app/api/auth/signup/${infor.role}`,
+        `https://b8c6-171-253-40-101.ngrok-free.app/api/auth/signup/${infor.role}`,
         {
           method: "POST",
           headers: {

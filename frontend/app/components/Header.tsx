@@ -17,6 +17,8 @@ function Header() {
     </Link>
   );
 
+  const role = window.localStorage.getItem("role");
+
   const session = useSession();
   useEffect(() => {
     console.log("Session:", session);
@@ -69,11 +71,13 @@ function Header() {
             />
           </Link>
         </div>
-        <ul className="flex justify-end items-center flex-1 gap-8 text-[#E0E0E0]">
-          {/* <li className="flex items-center">
-            <a className="inline-block w-full p-4 hover:text-gray-400" href="#">
-              How it work
-            </a>
+
+        <ul className="flex justify-between items-center flex-1 gap-8 text-[#E0E0E0]">
+          <li className="flex items-center">
+            <Link className="inline-block w-full p-4 hover:text-gray-400" href={`/${role}`}>
+              Home
+            </Link>
+
           </li>
           <li className="flex items-center">
             <a className="inline-block w-full p-4 hover:text-gray-400" href="#">
@@ -81,11 +85,32 @@ function Header() {
             </a>
           </li>
           <li className="flex items-center">
-            <a className="inline-block w-full p-4 hover:text-gray-400" href="#">
-              About us
-            </a>
-          </li> */}
-          <li className="flex items-center">{button}</li>
+
+            <Link className="inline-block w-full p-4 hover:text-gray-400" href={`/${role}/profile`}>
+              Your profile
+            </Link>
+          </li>
+          <li className="flex items-center">
+            {userInfo ? (
+              <div>
+                {/* <p className="text-black">Hello student: {userInfo?.email}</p> */}
+
+                <Link
+                  className="inline-block w-full hover:text-gray-400"
+                  href="/"
+                >
+                  Logout
+                </Link>
+              </div>
+            ) : (
+              <Link
+                className="inline-block w-full py-4 px-6 border border-[#31F7C4] text-[#31F7C4]"
+                href="/auth/login"
+              >
+                Login
+              </Link>
+            )}
+          </li>
         </ul>
       </nav>
     </div>
