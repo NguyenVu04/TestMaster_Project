@@ -8,9 +8,12 @@ import { validateLoginData } from "@/lib/validation/auth";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 // import { post } from "@/app/axios";
+import { useDispatch } from "react-redux";
+import { login } from "@/app/store/authSlice";
 
 import * as request from "@/app/axios";
 export default function SignIn() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const types = ["email", "password", "role"];
   const [infor, setInfor] = useState({
